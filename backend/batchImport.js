@@ -8,24 +8,21 @@ const client = new MongoClient(MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-// let data = [];
-// const seats = Object.values(flights).flat();
+let data = [];
+const flightNums = Object.keys(flights);
+const seatData = Object.values(flights);
 
-console.log(flights);
-// flights.forEach((flight) => {
-//   console.log(flight);
-// });
-// seats.forEach((seat) => {
-//   console.log(seat);
-//   data.push({ _id: `${}` });
-// });
-// console.log(flight);
+flightNums.forEach((flightNum, index) => {
+  data.push({ _id: flightNum, seats: seatData[index] });
+});
+
+console.log(data);
 
 const batchImport = async () => {
   try {
     await client.connect();
     const db = client.db("slingair");
-    const result = await db.collection("flights").insertMany(flights);
+    const result = await db.collection("flights").insertMany(data);
     console.log("Batch import successful");
   } catch (err) {
     console.log(err.stack);
