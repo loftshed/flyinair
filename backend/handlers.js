@@ -21,20 +21,23 @@ const { flights, reservations } = require("./data");
 const getFlights = async (req, res) => {
   try {
     await client.connect();
-    const flights = await db.collection("flights").find().toArray();
-    console.log(flights);
-    res.status(200).json({ status: 200, flights: flights });
+    const flightsData = await db.collection("flights").find().toArray();
+    res.status(200).json({ status: 200, flights: flightsData });
   } catch (err) {
-    res.status(500).json({ status: 500, data: err });
+    res.status(500).json({ status: 500, error: err });
     console.log(err);
   }
   client.close();
 };
 
-const getFlight = async (req, res) => {
-  await client.connect();
+const getFlight = async ({ query: { flight } }, res) => {
   try {
+    await client.connect();
+    const flightData = await db.collection("flights").findOne({ _id: flight });
+    console.log(flight);
+    res.status(200).json({ status: 200, flight: flightData });
   } catch (err) {
+    res.status(500).json({ status: 500, error: err });
     console.log(err);
   }
   client.close();
@@ -50,9 +53,16 @@ const addReservation = async (req, res) => {
 };
 
 const getReservations = async (req, res) => {
-  await client.connect();
   try {
+    await client.connect();
+    const reservationData = await db
+      .collection("reservations")
+      .find()
+      .toArray();
+    console.log(reservations);
+    res.status(200).json({ status: 200, reservations: reservationData });
   } catch (err) {
+    res.status(500).json({ status: 500, error: err });
     console.log(err);
   }
   client.close();
