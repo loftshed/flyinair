@@ -24,8 +24,8 @@ const getFlights = async (req, res) => {
     const flightsData = await db.collection("flights").find().toArray();
     res.status(200).json({ status: 200, flights: flightsData });
   } catch (err) {
-    res.status(500).json({ status: 500, error: err });
     console.log(err);
+    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
@@ -36,17 +36,20 @@ const getFlight = async ({ query: { flight } }, res) => {
     const flightData = await db.collection("flights").findOne({ _id: flight });
     res.status(200).json({ status: 200, flight: flightData });
   } catch (err) {
-    res.status(500).json({ status: 500, error: err });
     console.log(err);
+    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
 
-const addReservation = async (req, res) => {
+const addReservation = async ({ body }, res) => {
   await client.connect();
   try {
+    const reservationData = await db.collection("reservations").insertOne(body);
+    res.status(201).json({ status: 201, data: body });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
@@ -61,8 +64,8 @@ const getReservations = async (req, res) => {
     console.log(reservations);
     res.status(200).json({ status: 200, reservations: reservationData });
   } catch (err) {
-    res.status(500).json({ status: 500, error: err });
     console.log(err);
+    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
@@ -73,11 +76,10 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
     const reservationData = await db
       .collection("reservations")
       .findOne({ _id: reservationId });
-    console.log(reservationData);
     res.status(200).json({ status: 200, flight: reservationData });
   } catch (err) {
-    res.status(500).json({ status: 500, error: err });
     console.log(err);
+    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
