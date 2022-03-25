@@ -34,7 +34,6 @@ const getFlight = async ({ query: { flight } }, res) => {
   try {
     await client.connect();
     const flightData = await db.collection("flights").findOne({ _id: flight });
-    console.log(flight);
     res.status(200).json({ status: 200, flight: flightData });
   } catch (err) {
     res.status(500).json({ status: 500, error: err });
@@ -68,10 +67,16 @@ const getReservations = async (req, res) => {
   client.close();
 };
 
-const getSingleReservation = async (req, res) => {
-  await client.connect();
+const getSingleReservation = async ({ query: { reservationId } }, res) => {
   try {
+    await client.connect();
+    const reservationData = await db
+      .collection("reservations")
+      .findOne({ _id: reservationId });
+    console.log(reservationData);
+    res.status(200).json({ status: 200, flight: reservationData });
   } catch (err) {
+    res.status(500).json({ status: 500, error: err });
     console.log(err);
   }
   client.close();
