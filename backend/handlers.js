@@ -47,23 +47,18 @@ const getFlight = async ({ query: { flight } }, res) => {
 };
 
 const addReservation = async ({ body }, res) => {
-  // todo check if reservation already exists. maybe just prevent this in frontend
   try {
     await client.connect();
-    console.log(body);
-    // const reservationData = await db
-    //   .collection("reservations")
-    //   .insertOne((body = { _id: uuidv4(), ...body }));
-    // console.log(reservationData);
-    res.status(201).json({ status: 201, data: body });
+    const reservationData = await db
+      .collection("reservations")
+      .insertOne((body = { _id: uuidv4(), ...body }));
+    res.status(201).json({ status: 201, data: reservationData });
   } catch (err) {
     console.log(err);
     res.status(500).json({ status: 500, data: body, error: err });
   }
   client.close();
 };
-
-console.log(uuidv4());
 
 const getReservations = async (req, res) => {
   try {

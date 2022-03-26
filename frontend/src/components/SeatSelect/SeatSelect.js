@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import Plane from "./Plane";
 import styled from "styled-components";
@@ -7,31 +8,39 @@ import { AppContext } from "../AppContext";
 
 const SeatSelect = () => {
   const { selectedFlight, selectedSeat } = useContext(AppContext);
+  const [reservationId, setReservationId] = useState("");
+
+  const history = useHistory();
 
   const handleSubmit = async (ev) => {
     // TODO if incorrect data entered, highlight which field it came from
     ev.preventDefault();
     try {
       const { firstName, lastName, email } = ev.currentTarget.elements;
-      const reservationData = {
-        flight: selectedFlight,
-        seat: selectedSeat,
-        givenName: firstName.value,
-        surname: lastName.value,
-        email: email.value,
-      };
+
       const firstNameValid = firstName.value.length >= 1;
       const lastNameValid = lastName.value.length >= 1;
       const emailValid =
         email.value.indexOf("@") >= 1 &&
         email.value.indexOf(".") <= email.value.length - 3;
+
       if (firstNameValid && lastNameValid && emailValid) {
         const response = await fetch("/api/add-reservation", {
           method: "POST",
-          headers: { "Content-Type": "application-json" },
-          body: JSON.stringify(reservationData),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            flight: selectedFlight,
+            seat: selectedSeat,
+            givenName: firstName.value,
+            surname: lastName.value,
+            email: email.value,
+          }),
         });
-        return response.json();
+        const newReservationId = await response.json().insertedId;
+        if (newReservationId) setReservationId(newReservationId);
       }
     } catch (err) {
       console.log(err);
