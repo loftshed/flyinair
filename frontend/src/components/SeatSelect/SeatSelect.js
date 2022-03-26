@@ -2,7 +2,7 @@ import Plane from "./Plane";
 import styled from "styled-components";
 import FlightSelect from "./FlightSelect";
 
-const SeatSelect = ({}) => {
+const SeatSelect = () => {
   return (
     <Wrapper>
       <FlightSelect />
