@@ -7,14 +7,15 @@ const Plane = () => {
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
-    // TODO: get seating data for selected flight
     (async () => {
       try {
         const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
         const {
           flight: { seats },
         } = await data.json();
-        setSeating(seats);
+        if (seats) {
+          setSeating(seats);
+        }
       } catch (err) {
         console.log(err);
       }
