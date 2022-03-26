@@ -5,6 +5,7 @@ export const AppContext = createContext(null);
 export const AppProvider = ({ children }) => {
   const [availableFlights, setAvailableFlights] = useState([]);
   const [selectedFlight, setSelectedFlight] = useState("");
+  const [selectedSeat, setSelectedSeat] = useState("");
 
   return (
     <AppContext.Provider
@@ -13,6 +14,8 @@ export const AppProvider = ({ children }) => {
         setAvailableFlights,
         selectedFlight,
         setSelectedFlight,
+        selectedSeat,
+        setSelectedSeat,
       }}
     >
       {children}

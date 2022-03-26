@@ -1,8 +1,11 @@
+import { useState } from "react";
+
 import Plane from "./Plane";
 import styled from "styled-components";
 import FlightSelect from "./FlightSelect";
 
 const SeatSelect = () => {
+  const [userData, setUserData] = useState({});
   return (
     <Wrapper>
       <FlightSelect />
@@ -17,10 +20,26 @@ const SeatSelect = () => {
           }}
         >
           <Inputs>
-            <input placeholder="First name"></input>
-            <input placeholder="Last name"></input>
-            <input placeholder="Email"></input>
-            <button type="submit">Confirm</button>
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              placeholder="First name"
+            />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              placeholder="Last name"
+            />
+            <input type="text" id="email" name="email" placeholder="Email" />
+            <input
+              onClick={(ev) => {
+                ev.preventDefault();
+              }}
+              type="submit"
+              value="Confirm"
+            />
           </Inputs>
         </div>
       </div>
@@ -36,7 +55,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Inputs = styled.div`
+const Inputs = styled.form`
   display: flex;
   flex-direction: column;
   border: 4px solid red;

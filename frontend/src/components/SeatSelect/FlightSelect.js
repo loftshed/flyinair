@@ -23,7 +23,6 @@ const FlightSelect = () => {
   return (
     <Wrapper>
       <h1>Flight Number:</h1>
-      <label htmlFor="flights">Select a flight:</label>
       <select
         name="flights"
         id="flights"

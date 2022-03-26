@@ -3,21 +3,19 @@ import { AppContext } from "../AppContext";
 import styled from "styled-components";
 
 const Plane = () => {
-  const { selectedFlight } = useContext(AppContext);
+  const { selectedFlight, setSelectedSeat } = useContext(AppContext);
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
-        // if (!selectedFlight === "") {
-        const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
-        const {
-          flight: { seats },
-        } = await data.json();
-        if (seats) {
+        if (selectedFlight !== "") {
+          const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
+          const {
+            flight: { seats },
+          } = await data.json();
           setSeating(seats);
         }
-        // }
       } catch (err) {
         console.log(err);
       }
@@ -32,7 +30,14 @@ const Plane = () => {
             <label>
               {seat.isAvailable ? (
                 <>
-                  <Seat type="radio" name="seat" onChange={() => {}} />
+                  <Seat
+                    id={seat.id}
+                    type="radio"
+                    name="seat"
+                    onChange={(ev) => {
+                      setSelectedSeat(ev.target.id);
+                    }}
+                  />
                   <Available>{seat.id}</Available>
                 </>
               ) : (
