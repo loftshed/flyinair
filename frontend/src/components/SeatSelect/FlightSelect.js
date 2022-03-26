@@ -1,30 +1,44 @@
-import { useEffect, useState, useContext } from "react";
-// import { AppContext } from "../AppContext";
+import { useEffect, useContext } from "react";
+import { AppContext } from "../AppContext";
 import styled from "styled-components";
 
 const FlightSelect = () => {
-  // const { flights, setFlights } = useContext(AppContext);
-  const [flights, setFlights] = useState([]);
+  const { availableFlights, setAvailableFlights, setSelectedFlight } =
+    useContext(AppContext);
+
   useEffect(() => {
     (async () => {
       try {
         const data = await fetch("/api/get-flights");
         const jsonifiedData = await data.json();
-        setFlights(jsonifiedData.flights);
+        setAvailableFlights(jsonifiedData.flights);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, []);
+  }, [setAvailableFlights]);
 
-  console.log(flights);
+  // console.log(availableFlights);
 
   return (
     <Wrapper>
       <h1>Flight Number:</h1>
-      <select name="flights" id="flights">
-        {flights.map(({ _id }) => {
-          return <option value={_id}>{_id}</option>;
+      <label for="flights">Select a flight:</label>
+      <select
+        name="flights"
+        id="flights"
+        onChange={(ev) => {
+          setSelectedFlight(ev.target.value);
+        }}
+        defaultValue={"default"}
+      >
+        <option key={"default"}>Select a flight</option>
+        {availableFlights.map(({ _id }) => {
+          return (
+            <option key={_id} value={_id}>
+              {_id}
+            </option>
+          );
         })}
       </select>
     </Wrapper>

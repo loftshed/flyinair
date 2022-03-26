@@ -1,12 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AppContext } from "../AppContext";
 import styled from "styled-components";
 
 const Plane = () => {
+  const { selectedFlight } = useContext(AppContext);
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
     // TODO: get seating data for selected flight
-  }, []);
+    (async () => {
+      try {
+        const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
+        const {
+          flight: { seats },
+        } = await data.json();
+        setSeating(seats);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [selectedFlight]);
 
   return (
     <Wrapper>
