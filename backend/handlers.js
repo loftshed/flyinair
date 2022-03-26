@@ -1,4 +1,5 @@
 "use strict";
+const { match } = require("assert");
 const { connect } = require("http2");
 const { MongoClient } = require("mongodb");
 const { reset } = require("nodemon");
@@ -43,8 +44,8 @@ const getFlight = async ({ query: { flight } }, res) => {
 };
 
 const addReservation = async ({ body }, res) => {
-  await client.connect();
   try {
+    await client.connect();
     const reservationData = await db.collection("reservations").insertOne(body);
     res.status(201).json({ status: 201, data: body });
   } catch (err) {
@@ -84,18 +85,51 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
   client.close();
 };
 
-const deleteReservation = async (req, res) => {
-  await client.connect();
+const deleteReservation = async ({ query: { reservationId } }, res) => {
   try {
+    await client.connect();
+    console.log(reservationId);
+    const deleteData = await db
+      .collection("reservations")
+      .deleteOne({ _id: reservationId });
+    if (deleteData.deletedCount) {
+      console.log({ deleteData, message: "Delete successful" });
+      res.status(204).json({ status: 204 });
+    } else {
+      res.status(500).json({ status: 500, message: "ID not found." });
+    }
   } catch (err) {
     console.log(err);
   }
   client.close();
 };
 
-const updateReservation = async (req, res) => {
-  await client.connect();
+const updateReservation = async ({ query: { reservationId }, body }, res) => {
   try {
+    await client.connect();
+    const updatedReservation = await db
+      .collection("reservations")
+      .updateOne({ _id: reservationId }, { $set: body });
+    const { acknowledged, modifiedCount, matchedCount } = updatedReservation;
+    if (modifiedCount) {
+      res.status(200).json({
+        status: 200,
+        acknowledged: acknowledged,
+        matchFound: !!matchedCount,
+        propsModified: modifiedCount,
+        message: `ID match found, ${propsModified} properties modified`,
+      });
+    } else if (matchedCount) {
+      res.status(200).json({
+        status: 200,
+        acknowledged: acknowledged,
+        matchFound: !!matchedCount,
+        propsModified: modifiedCount,
+        message: "ID match found, no data changed.",
+      });
+    } else {
+      res.status(500).json({ status: 500, message: "Update failed." });
+    }
   } catch (err) {
     console.log(err);
   }
