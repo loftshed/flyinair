@@ -20,9 +20,9 @@ const FlightSelect = () => {
   return (
     <Wrapper>
       <h1>Flight Number:</h1>
-      <select>
-        {flights.map(({ _id, seats }) => {
-          return <option>{_id}</option>;
+      <select name="flights" id="flights">
+        {flights.map(({ _id }) => {
+          return <option value={_id}>{_id}</option>;
         })}
       </select>
     </Wrapper>
