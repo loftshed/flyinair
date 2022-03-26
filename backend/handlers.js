@@ -16,17 +16,15 @@ const db = client.db("slingair");
 // use this package to generate unique ids: https://www.npmjs.com/package/uuid
 const { v4: uuidv4 } = require("uuid");
 
-// use this data. Changes will persist until the server (backend) restarts.
-const { flights, reservations } = require("./data");
-
 const getFlights = async (req, res) => {
   try {
     await client.connect();
     const flightsData = await db.collection("flights").find().toArray();
-    res.status(200).json({ status: 200, flights: flightsData });
+    flightsData
+      ? res.status(200).json({ status: 200, flights: flightsData })
+      : res.status(500).json({ status: 500, message: "Something went wrong." });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
@@ -35,22 +33,29 @@ const getFlight = async ({ query: { flight } }, res) => {
   try {
     await client.connect();
     const flightData = await db.collection("flights").findOne({ _id: flight });
-    res.status(200).json({ status: 200, flight: flightData });
+    flightData
+      ? res.status(200).json({ status: 200, flight: flightData })
+      : res.status(500).json({
+          status: 500,
+          data: flight,
+          message: "No flight with that ID.",
+        });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
 
 const addReservation = async ({ body }, res) => {
+  // todo check if reservation already exists. maybe just prevent this in frontend
   try {
     await client.connect();
     const reservationData = await db.collection("reservations").insertOne(body);
+    console.log(reservationData);
     res.status(201).json({ status: 201, data: body });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ status: 500, error: err });
+    res.status(500).json({ status: 500, data: body, error: err });
   }
   client.close();
 };
@@ -62,11 +67,11 @@ const getReservations = async (req, res) => {
       .collection("reservations")
       .find()
       .toArray();
-    console.log(reservations);
-    res.status(200).json({ status: 200, reservations: reservationData });
+    reservationData
+      ? res.status(200).json({ status: 200, reservations: reservationData })
+      : res.status(500).json({ status: 500, message: "Something went wrong." });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
@@ -77,10 +82,15 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
     const reservationData = await db
       .collection("reservations")
       .findOne({ _id: reservationId });
-    res.status(200).json({ status: 200, flight: reservationData });
+    reservationData
+      ? res.status(200).json({ status: 200, flight: reservationData })
+      : res.status(500).json({
+          status: 500,
+          data: reservationId,
+          message: "No reservation with that ID.",
+        });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ status: 500, error: err });
   }
   client.close();
 };
@@ -96,7 +106,11 @@ const deleteReservation = async ({ query: { reservationId } }, res) => {
       console.log({ deleteData, message: "Delete successful" });
       res.status(204).json({ status: 204 });
     } else {
-      res.status(500).json({ status: 500, message: "ID not found." });
+      res.status(500).json({
+        status: 500,
+        data: reservationId,
+        message: "ID not found.",
+      });
     }
   } catch (err) {
     console.log(err);
@@ -111,6 +125,8 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
       .collection("reservations")
       .updateOne({ _id: reservationId }, { $set: body });
     const { acknowledged, modifiedCount, matchedCount } = updatedReservation;
+
+    // try this inline wiht ternary
     if (modifiedCount) {
       res.status(200).json({
         status: 200,
@@ -128,7 +144,9 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
         message: "ID match found, no data changed.",
       });
     } else {
-      res.status(500).json({ status: 500, message: "Update failed." });
+      res
+        .status(500)
+        .json({ status: 500, data: body, message: "Update failed." });
     }
   } catch (err) {
     console.log(err);
