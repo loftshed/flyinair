@@ -1,9 +1,11 @@
 import Plane from "./Plane";
 import styled from "styled-components";
+import FlightSelect from "./FlightSelect";
 
 const SeatSelect = ({}) => {
   return (
     <Wrapper>
+      <FlightSelect />
       <h2>Select your seat and Provide your information!</h2>
       <div style={{ display: "flex" }}>
         <Plane />
