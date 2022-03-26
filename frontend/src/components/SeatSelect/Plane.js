@@ -9,6 +9,7 @@ const Plane = () => {
   useEffect(() => {
     (async () => {
       try {
+        // if (!selectedFlight === "") {
         const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
         const {
           flight: { seats },
@@ -16,6 +17,7 @@ const Plane = () => {
         if (seats) {
           setSeating(seats);
         }
+        // }
       } catch (err) {
         console.log(err);
       }
