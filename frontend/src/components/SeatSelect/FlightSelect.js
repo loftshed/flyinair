@@ -22,24 +22,26 @@ const FlightSelect = () => {
 
   return (
     <Wrapper>
-      <h1>Flight Number:</h1>
-      <select
-        name="flights"
-        id="flights"
-        onChange={(ev) => {
-          setSelectedFlight(ev.target.value);
-        }}
-        defaultValue={"default"}
-      >
-        <option key={"default"}>Select a flight</option>
-        {availableFlights.map(({ _id }) => {
-          return (
-            <option key={_id} value={_id}>
-              {_id}
-            </option>
-          );
-        })}
-      </select>
+      <CenteredDiv>
+        <h1>Flight Number:</h1>
+        <Selector
+          name="flights"
+          id="flights"
+          onChange={(ev) => {
+            setSelectedFlight(ev.target.value);
+          }}
+          defaultValue={"default"}
+        >
+          <option key={"default"}>Select a flight</option>
+          {availableFlights.map(({ _id }) => {
+            return (
+              <option key={_id} value={_id}>
+                {_id}
+              </option>
+            );
+          })}
+        </Selector>
+      </CenteredDiv>
     </Wrapper>
   );
 };
@@ -48,8 +50,21 @@ export default FlightSelect;
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
   width: 100%;
-  height: 50px;
+  height: 45px;
   padding: 0px 18px;
   background-color: #aa001e;
+`;
+
+const CenteredDiv = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 25px;
+`;
+
+const Selector = styled.select`
+  font-family: Kosugi;
+  font-size: 20px;
+  height: 35px;
 `;

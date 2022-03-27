@@ -7,8 +7,8 @@ import FlightSelect from "./FlightSelect";
 import { AppContext } from "../AppContext";
 
 const SeatSelect = () => {
-  const { selectedFlight, selectedSeat } = useContext(AppContext);
-  const [reservationId, setReservationId] = useState("");
+  const { selectedFlight, selectedSeat, setReservationId } =
+    useContext(AppContext);
 
   const history = useHistory();
 
@@ -65,8 +65,6 @@ const SeatSelect = () => {
           return;
         }
       }
-
-      // TODO: update "isAvailable" on plane!!
     } catch (err) {
       console.log(err);
     }

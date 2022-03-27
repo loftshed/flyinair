@@ -3,7 +3,8 @@ import { AppContext } from "../AppContext";
 import styled from "styled-components";
 
 const Plane = () => {
-  const { selectedFlight, setSelectedSeat } = useContext(AppContext);
+  const { selectedFlight, setSelectedSeat, selectedSeat, reservationId } =
+    useContext(AppContext);
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Plane = () => {
         console.log(err);
       }
     })();
-  }, [selectedFlight]);
+  }, [selectedFlight, reservationId]);
 
   // TODO get seats to update
 
@@ -39,6 +40,7 @@ const Plane = () => {
                     onChange={(ev) => {
                       setSelectedSeat(ev.target.id);
                     }}
+                    checked={selectedSeat === seat.id}
                   />
                   <Available>{seat.id}</Available>
                 </>
