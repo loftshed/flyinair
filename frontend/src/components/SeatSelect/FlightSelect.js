@@ -1,10 +1,15 @@
 import { useEffect, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
 
 const FlightSelect = () => {
-  const { availableFlights, setAvailableFlights, setSelectedFlight } =
-    useContext(AppContext);
+  const {
+    availableFlights,
+    setAvailableFlights,
+    setSelectedFlight,
+    reservationId,
+  } = useContext(AppContext);
 
   useEffect(() => {
     (async () => {
@@ -22,26 +27,35 @@ const FlightSelect = () => {
 
   return (
     <Wrapper>
-      <CenteredDiv>
-        <Heading>Flight Number:</Heading>
-        <Selector
-          name="flights"
-          id="flights"
-          onChange={(ev) => {
-            setSelectedFlight(ev.target.value);
-          }}
-          defaultValue={"default"}
-        >
-          <option key={"default"}>Select</option>
-          {availableFlights.map(({ _id }) => {
-            return (
-              <option key={_id} value={_id}>
-                {_id}
-              </option>
-            );
-          })}
-        </Selector>
-      </CenteredDiv>
+      <div>
+        <CenteredDiv>
+          <Heading>Flight Number:</Heading>
+          <Selector
+            name="flights"
+            id="flights"
+            onChange={(ev) => {
+              setSelectedFlight(ev.target.value);
+            }}
+            defaultValue={"default"}
+          >
+            <option key={"default"}>Select</option>
+            {availableFlights.map(({ _id }) => {
+              return (
+                <option key={_id} value={_id}>
+                  {_id}
+                </option>
+              );
+            })}
+          </Selector>
+        </CenteredDiv>
+      </div>
+      <Nav>
+        {reservationId && (
+          <ReservationInfo to="/view-reservation">
+            Your Reservation
+          </ReservationInfo>
+        )}
+      </Nav>
     </Wrapper>
   );
 };
@@ -56,6 +70,20 @@ const Heading = styled.h1`
   padding: 5px;
   background-color: var(--color-yellow);
 `;
+
+// const ReservationInfo = styled.button`
+//   text-shadow: var(--color-red) 0px 1px 3px 3px;
+//   font-family: "Kosugi", cursive;
+//   font-size: 18px;
+//   border: none;
+//   border-radius: 5px;
+//   padding: 5px;
+//   background-color: var(--color-red);
+//   cursor: pointer;
+//   &:hover {
+//     background-color: var(--color-orange);
+//   }
+// `;
 
 const Wrapper = styled.div`
   display: flex;
@@ -83,4 +111,42 @@ const Selector = styled.select`
   border-radius: 5px;
   padding: 0px 5px;
   box-shadow: 0px 1px 1px 0px #a8dadc;
+`;
+
+////
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const ReservationInfo = styled(NavLink)`
+  text-shadow: var(--color-red) 0px 1px 3px 3px;
+  font-family: "Kosugi", cursive;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: var(--color-red);
+  color: var(--color-lightest);
+
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-orange);
+  }
+  text-decoration: none;
+  transition: all ease 100ms;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    background: var(--color-orange);
+    color: var(--color-lightest);
+    border-color: var(--color-lightest);
+  }
 `;
