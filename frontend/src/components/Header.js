@@ -9,11 +9,6 @@ const Header = () => {
   return (
     <Wrapper>
       <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
-      <Nav>
-        {reservationId && (
-          <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        )}
-      </Nav>
     </Wrapper>
   );
 };
