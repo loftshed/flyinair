@@ -12,6 +12,10 @@ const SeatSelect = () => {
 
   const history = useHistory();
 
+  const window = selectedSeat.includes("A") || selectedSeat.includes("F");
+  const middle = selectedSeat.includes("B") || selectedSeat.includes("E");
+  const aisle = selectedSeat.includes("C") || selectedSeat.includes("D");
+
   const handleSubmit = async (ev) => {
     // TODO if incorrect data entered, highlight which field it came from
     ev.preventDefault();
@@ -88,14 +92,39 @@ const SeatSelect = () => {
           <Heading>Select your seat & provide your information!</Heading>
           <div>
             <Seat>
-              Selected seat:{" "}
-              <span style={{}}>
+              {/* <span style={{ fontSize: "14px", color: "var(--color-red)" }}>
+                SELECTED SEAT
+              </span> */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontSize: "40px",
+                  width: "88px",
+                  height: "88px",
+                  border: "4px solid",
+                  borderRadius: "3px",
+                }}
+              >
                 {selectedSeat && selectedFlight !== "Select" ? (
-                  <>{selectedSeat}</>
+                  <div>
+                    {selectedSeat}
+                    <p style={{ fontSize: "12px" }}>
+                      {window && <>WINDOW</>}
+                      {middle && <>MIDDLE</>}
+                      {aisle && <>AISLE</>}
+                    </p>
+                  </div>
                 ) : (
-                  <>■</>
+                  <div style={{ fontSize: "14px", color: "var(--color-red)" }}>
+                    <p>SELECT</p>
+                    <p>A</p>
+                    <p>SEAT</p>
+                  </div>
                 )}
-              </span>
+              </div>
             </Seat>
           </div>
           <Inputs onSubmit={handleSubmit}>
@@ -144,12 +173,13 @@ const Heading = styled.p`
   text-align: center;
 `;
 
-const Seat = styled.p`
+const Seat = styled.div`
+  font-family: Kosugi;
   font-size: 20px;
   font-weight: 600;
   color: var(--color-dark-blue);
   width: 100%;
-  text-align: center;
+  justify-content: center;
 `;
 
 const Inputs = styled.form`
@@ -157,6 +187,7 @@ const Inputs = styled.form`
   flex-direction: column;
   border: 4px solid var(--color-medium-blue);
   padding: 25px;
+  border-radius: 5px;
   &:active {
     outline: var(--color-dark-blue);
   }
