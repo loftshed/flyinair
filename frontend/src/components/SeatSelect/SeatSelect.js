@@ -73,58 +73,55 @@ const SeatSelect = () => {
   };
 
   return (
-    <>
-      <FlightSelect />
-      <Wrapper>
-        <div style={{ display: "flex" }}>
-          <Plane />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "25px",
-            }}
-          >
-            <Heading>Select your seat & provide your information!</Heading>
-            <div>
-              <Seat>
-                Selected seat:{" "}
-                <span style={{}}>
-                  {selectedSeat && selectedFlight !== "Select" ? (
-                    <>{selectedSeat}</>
-                  ) : (
-                    <>■</>
-                  )}
-                </span>
-              </Seat>
-            </div>
-            <Inputs onSubmit={handleSubmit}>
-              <InputField
-                type="text"
-                htmlFor="firstName"
-                name="firstName"
-                placeholder="First name"
-              />
-              <InputField
-                type="text"
-                htmlFor="lastName"
-                name="lastName"
-                placeholder="Last name"
-              />
-              <InputField
-                type="text"
-                htmlFor="email"
-                name="email"
-                placeholder="Email"
-              />
-              <SubmitButton type="submit" value="Confirm" />
-            </Inputs>
+    <Wrapper>
+      <div style={{ display: "flex" }}>
+        <Plane />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "25px",
+          }}
+        >
+          <Heading>Select your seat & provide your information!</Heading>
+          <div>
+            <Seat>
+              Selected seat:{" "}
+              <span style={{}}>
+                {selectedSeat && selectedFlight !== "Select" ? (
+                  <>{selectedSeat}</>
+                ) : (
+                  <>■</>
+                )}
+              </span>
+            </Seat>
           </div>
+          <Inputs onSubmit={handleSubmit}>
+            <InputField
+              type="text"
+              htmlFor="firstName"
+              name="firstName"
+              placeholder="First name"
+            />
+            <InputField
+              type="text"
+              htmlFor="lastName"
+              name="lastName"
+              placeholder="Last name"
+            />
+            <InputField
+              type="text"
+              htmlFor="email"
+              name="email"
+              placeholder="Email"
+            />
+            <SubmitButton type="submit" value="Confirm" />
+          </Inputs>
         </div>
-      </Wrapper>
-    </>
+      </div>
+    </Wrapper>
   );
 };
 

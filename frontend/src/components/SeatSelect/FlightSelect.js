@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
 

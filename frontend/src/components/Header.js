@@ -2,14 +2,18 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { AppContext } from "./AppContext";
+import FlightSelect from "./SeatSelect/FlightSelect";
 
 const Header = () => {
   const { currentReservation, reservationId } = useContext(AppContext);
   const history = useHistory();
   return (
-    <Wrapper>
-      <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
+      </Wrapper>
+      <FlightSelect />
+    </>
   );
 };
 
