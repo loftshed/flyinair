@@ -10,7 +10,7 @@ const Plane = () => {
   useEffect(() => {
     (async () => {
       try {
-        if (selectedFlight !== "" && selectedFlight !== "Select a flight") {
+        if (selectedFlight !== "" && selectedFlight !== "Select") {
           const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
           const {
             flight: { seats },
@@ -28,11 +28,9 @@ const Plane = () => {
 
   return (
     <PlaneContainer>
-      <Flight>{selectedFlight}</Flight>
+      <Flight>{selectedFlight !== "Select" ? selectedFlight : ""}</Flight>
       <Wrapper>
-        {seating &&
-        seating.length > 0 &&
-        selectedFlight !== "Select a flight" ? (
+        {seating && seating.length > 0 && selectedFlight !== "Select" ? (
           seating.map((seat) => (
             <SeatWrapper key={`seat-${seat.id}`}>
               <label>

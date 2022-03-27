@@ -92,7 +92,7 @@ const SeatSelect = () => {
               <Seat>
                 Selected seat:{" "}
                 <span style={{}}>
-                  {selectedSeat && selectedFlight !== "Select a flight" ? (
+                  {selectedSeat && selectedFlight !== "Select" ? (
                     <>{selectedSeat}</>
                   ) : (
                     <>■</>

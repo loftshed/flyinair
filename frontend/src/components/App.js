@@ -35,7 +35,7 @@ const Main = styled.div`
   background: var(--color-lightest);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 90px);
 `;
 
 export default App;

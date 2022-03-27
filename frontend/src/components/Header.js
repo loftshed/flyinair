@@ -1,16 +1,20 @@
 import styled from "styled-components";
+import { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { AppContext } from "./AppContext";
 
 const Header = () => {
+  const { currentReservation, reservationId } = useContext(AppContext);
   const history = useHistory();
   return (
     <Wrapper>
       <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
       <Nav>
-        {/* TODO: only show link if the user has a reservation already */}
-        <>
-          <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        </>
+        {reservationId && (
+          <>
+            <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+          </>
+        )}
       </Nav>
     </Wrapper>
   );
@@ -19,12 +23,14 @@ const Header = () => {
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   background: var(--color-dark-blue);
-  height: 110px;
+  height: 90px;
   padding: var(--padding-page) 24px;
+  border-bottom: solid 2px white;
 `;
 const Logo = styled.div`
+  transform: translateY(-2px);
   color: var(--color-lightest);
   font-family: "Fredoka One", cursive;
   text-shadow: -3px 0px var(--color-yellow);
