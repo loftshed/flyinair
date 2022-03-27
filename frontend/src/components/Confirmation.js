@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContext";
+import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
 const Confirmation = () => {
   const { reservationId, currentReservation, setCurrentReservation } =
@@ -19,7 +20,20 @@ const Confirmation = () => {
     })();
   }, [setCurrentReservation, reservationId]);
 
-  if (!currentReservation._id) return null;
+  if (!currentReservation._id)
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "100%",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <LoadingSpinner />
+      </div>
+    );
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
   return (

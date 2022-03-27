@@ -1,14 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import Plane from "./Plane";
 import styled from "styled-components";
-import FlightSelect from "./FlightSelect";
 import { AppContext } from "../AppContext";
+import LoadingSpinner from "./LoadingSpinner";
 
 const SeatSelect = () => {
   const { selectedFlight, selectedSeat, setReservationId } =
     useContext(AppContext);
+  const [waiting, setWaiting] = useState(false);
 
   const history = useHistory();
 
@@ -20,6 +21,7 @@ const SeatSelect = () => {
     // TODO if incorrect data entered, highlight which field it came from
     ev.preventDefault();
     try {
+      setWaiting(true);
       const { firstName, lastName, email } = ev.currentTarget.elements;
 
       const firstNameValid = firstName.value.length >= 1;
@@ -58,16 +60,15 @@ const SeatSelect = () => {
           }
         );
 
-        console.log(updateSeats);
-
         const {
           data: { insertedId },
         } = await reservationResponse.json();
 
         if (insertedId) {
           setReservationId(insertedId);
-          console.log(insertedId);
+          localStorage.setItem("reservationId", JSON.stringify(insertedId));
           history.push("/confirmed");
+          setWaiting(false);
           return;
         }
       }
@@ -78,7 +79,7 @@ const SeatSelect = () => {
 
   return (
     <Wrapper>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", gap: "40px" }}>
         <Plane />
         <div
           style={{
@@ -89,12 +90,9 @@ const SeatSelect = () => {
             gap: "25px",
           }}
         >
-          <Heading>Select your seat & provide your information!</Heading>
+          <Heading>Please provide your information,</Heading>
           <div>
             <Seat>
-              {/* <span style={{ fontSize: "14px", color: "var(--color-red)" }}>
-                SELECTED SEAT
-              </span> */}
               <div
                 style={{
                   display: "flex",
@@ -102,8 +100,8 @@ const SeatSelect = () => {
                   alignItems: "center",
                   textAlign: "center",
                   fontSize: "40px",
-                  width: "88px",
-                  height: "88px",
+                  width: "100px",
+                  height: "100px",
                   border: "4px solid",
                   borderRadius: "3px",
                 }}
@@ -111,14 +109,14 @@ const SeatSelect = () => {
                 {selectedSeat && selectedFlight !== "Select" ? (
                   <div>
                     {selectedSeat}
-                    <p style={{ fontSize: "12px" }}>
+                    <p style={{ fontSize: "14px" }}>
                       {window && <>WINDOW</>}
                       {middle && <>MIDDLE</>}
                       {aisle && <>AISLE</>}
                     </p>
                   </div>
                 ) : (
-                  <div style={{ fontSize: "14px", color: "var(--color-red)" }}>
+                  <div style={{ fontSize: "16px", color: "var(--color-red)" }}>
                     <p>SELECT</p>
                     <p>A</p>
                     <p>SEAT</p>
@@ -146,7 +144,12 @@ const SeatSelect = () => {
               name="email"
               placeholder="Email"
             />
-            <SubmitButton type="submit" value="Confirm" />
+            {!waiting && <SubmitButton type="submit" value="Confirm" />}
+            {waiting && (
+              <Spinner>
+                <LoadingSpinner size={"30px"} color={"var(--color-lightest)"} />
+              </Spinner>
+            )}
           </Inputs>
         </div>
       </div>
@@ -155,6 +158,19 @@ const SeatSelect = () => {
 };
 
 export default SeatSelect;
+
+const Spinner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  height: 42px;
+  border: 2px solid var(--color-yellow);
+  background-color: var(--color-yellow);
+  border-radius: 4px;
+  padding: 0 12px;
+  margin: 2.5px 0px;
+`;
 
 const Wrapper = styled.div`
   display: flex;

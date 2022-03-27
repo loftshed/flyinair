@@ -23,7 +23,7 @@ const Wrapper = styled.header`
   align-items: center;
   background: var(--color-dark-blue);
   height: 90px;
-  padding: var(--padding-page) 24px;
+  padding: var(--padding-page) 48px;
   border-bottom: solid 2px white;
 `;
 const Logo = styled.div`

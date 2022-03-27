@@ -1,10 +1,12 @@
 import styled, { keyframes } from "styled-components";
 import { ImSpinner3 } from "react-icons/im";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ color, size }) => {
   return (
     <Wrapper>
-      <Spinner />
+      <Spinner
+        style={{ color: `${color}`, width: `${size}`, height: `${size}` }}
+      />
     </Wrapper>
   );
 };

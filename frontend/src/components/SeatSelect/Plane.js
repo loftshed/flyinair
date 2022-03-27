@@ -67,9 +67,6 @@ const Plane = () => {
                       name="seat"
                       onChange={(ev) => {
                         setSelectedSeat(ev.target.id);
-                        console.log(`Seat selected: ${selectedSeat}`);
-                        console.log(seat.id);
-                        console.log(ev.target.id);
                       }}
                     />
                     <Available>{seat.id}</Available>

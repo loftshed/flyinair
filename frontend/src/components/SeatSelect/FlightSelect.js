@@ -23,8 +23,6 @@ const FlightSelect = () => {
     })();
   }, [setAvailableFlights]);
 
-  // console.log(availableFlights);
-
   return (
     <Wrapper>
       <div>
@@ -71,26 +69,12 @@ const Heading = styled.h1`
   background-color: var(--color-yellow);
 `;
 
-// const ReservationInfo = styled.button`
-//   text-shadow: var(--color-red) 0px 1px 3px 3px;
-//   font-family: "Kosugi", cursive;
-//   font-size: 18px;
-//   border: none;
-//   border-radius: 5px;
-//   padding: 5px;
-//   background-color: var(--color-red);
-//   cursor: pointer;
-//   &:hover {
-//     background-color: var(--color-orange);
-//   }
-// `;
-
 const Wrapper = styled.div`
   display: flex;
   font-family: "Concert One", cursive;
   justify-content: space-between;
   width: 100%;
-  padding: 5px 24px;
+  padding: 5px 45px;
   background-color: var(--color-light-blue);
   box-shadow: 0px 1px 1px 0px #a8dadc;
   height: 40px;
