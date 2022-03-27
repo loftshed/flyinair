@@ -22,43 +22,57 @@ const Plane = () => {
         console.log(err);
       }
     })();
-  }, [selectedFlight, reservationId]);
+  }, [selectedFlight, reservationId, setSelectedSeat]);
 
   // TODO get seats to update
 
   return (
-    <Wrapper>
-      {seating && seating.length > 0 && selectedFlight !== "Select a flight" ? (
-        seating.map((seat) => (
-          <SeatWrapper key={`seat-${seat.id}`}>
-            <label>
-              {seat.isAvailable ? (
-                <>
-                  <Seat
-                    id={seat.id}
-                    type="radio"
-                    name="seat"
-                    onChange={(ev) => {
-                      setSelectedSeat(ev.target.id);
-                      console.log(`Seat selected: ${selectedSeat}`);
-                      console.log(seat.id);
-                      console.log(ev.target.id);
-                    }}
-                  />
-                  <Available>{seat.id}</Available>
-                </>
-              ) : (
-                <Unavailable>{seat.id}</Unavailable>
-              )}
-            </label>
-          </SeatWrapper>
-        ))
-      ) : (
-        <Placeholder>Select a Flight to view seating.</Placeholder>
-      )}
-    </Wrapper>
+    <PlaneContainer>
+      <Flight>{selectedFlight}</Flight>
+      <Wrapper>
+        {seating &&
+        seating.length > 0 &&
+        selectedFlight !== "Select a flight" ? (
+          seating.map((seat) => (
+            <SeatWrapper key={`seat-${seat.id}`}>
+              <label>
+                {seat.isAvailable ? (
+                  <>
+                    <Seat
+                      id={seat.id}
+                      type="radio"
+                      name="seat"
+                      onChange={(ev) => {
+                        setSelectedSeat(ev.target.id);
+                        console.log(`Seat selected: ${selectedSeat}`);
+                        console.log(seat.id);
+                        console.log(ev.target.id);
+                      }}
+                    />
+                    <Available>{seat.id}</Available>
+                  </>
+                ) : (
+                  <Unavailable>{seat.id}</Unavailable>
+                )}
+              </label>
+            </SeatWrapper>
+          ))
+        ) : (
+          <Placeholder>Select a Flight to view seating.</Placeholder>
+        )}
+      </Wrapper>
+      <Footer />
+    </PlaneContainer>
   );
 };
+
+const PlaneContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 0px 5px 0px #a8dadc;
+  border-radius: 15px;
+`;
 
 const Placeholder = styled.div`
   display: flex;
@@ -75,16 +89,17 @@ const Placeholder = styled.div`
 
 const Wrapper = styled.ol`
   display: grid;
+  justify-content: center;
   grid-template-rows: repeat(10, 30px);
   grid-template-columns: 30px 30px 60px 30px 30px 30px;
   gap: 12px 10px;
   background: #fff;
   border-right: 15px solid var(--color-dark-blue);
   border-left: 15px solid var(--color-dark-blue);
-  margin: 24px 24px 0 0;
-  padding: 48px 5px;
-  height: 500px;
-  width: 300px;
+  margin: 0px 24px 0px 24px;
+  padding: 24px 5px 12px 5px;
+  height: 100%;
+  width: 100%;
   position: relative;
 `;
 const SeatWrapper = styled.li`
@@ -141,6 +156,32 @@ const Unavailable = styled(SeatNumber)`
   background: var(--color-yellow);
   cursor: not-allowed;
   opacity: 0.4;
+`;
+
+const Flight = styled.div`
+  font-family: Kosugi;
+  font-weight: 800;
+  font-size: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-lightest);
+  background-color: var(--color-light-blue);
+  text-shadow: 4px 0px 0px var(--color-dark-blue),
+    -4px 0px 0px var(--color-yellow);
+  width: 100%;
+  height: 60px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+`;
+
+const Footer = styled.div`
+  background-color: var(--color-light-blue);
+  width: 100%;
+  height: 30px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
 
 export default Plane;

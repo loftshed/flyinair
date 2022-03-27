@@ -56,6 +56,7 @@ const Wrapper = styled.div`
   padding: 12px 24px;
   background-color: var(--color-light-blue);
   text-shadow: var(--color-red) 1px 1px;
+  box-shadow: 0px 1px 1px 0px #a8dadc;
 `;
 
 const CenteredDiv = styled.div`

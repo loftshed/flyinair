@@ -27,6 +27,7 @@ const Wrapper = styled.header`
 const Logo = styled.div`
   color: var(--color-lightest);
   font-family: "Fredoka One", cursive;
+  text-shadow: -3px 0px var(--color-yellow);
   font-size: 60px;
   cursor: pointer;
 `;

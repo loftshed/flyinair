@@ -18,6 +18,7 @@ const Wrapper = styled.div`
   background-color: var(--color-light-blue);
   height: fit-content;
   bottom: 0px;
+  box-shadow: 0px 0px 2px 0px #a8dadc;
 `;
 const Logo = styled(GiBackPain)`
   color: var(--color-yellow);
