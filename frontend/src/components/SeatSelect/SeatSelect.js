@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import Plane from "./Plane";
@@ -54,6 +54,8 @@ const SeatSelect = () => {
           }
         );
 
+        console.log(updateSeats);
+
         const {
           data: { insertedId },
         } = await reservationResponse.json();
@@ -71,42 +73,46 @@ const SeatSelect = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <FlightSelect />
-      <h2>Select your seat and Provide your information!</h2>
-      <div style={{ display: "flex" }}>
-        <Plane />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <Inputs onSubmit={handleSubmit}>
-            <InputField
-              type="text"
-              htmlFor="firstName"
-              name="firstName"
-              placeholder="First name"
-            />
-            <InputField
-              type="text"
-              htmlFor="lastName"
-              name="lastName"
-              placeholder="Last name"
-            />
-            <InputField
-              type="text"
-              htmlFor="email"
-              name="email"
-              placeholder="Email"
-            />
-            <SubmitButton type="submit" value="Confirm" />
-          </Inputs>
+      <Wrapper>
+        <div style={{ display: "flex" }}>
+          <Plane />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "25px",
+            }}
+          >
+            <Heading>Select your seat & provide your information!</Heading>
+            <Inputs onSubmit={handleSubmit}>
+              <InputField
+                type="text"
+                htmlFor="firstName"
+                name="firstName"
+                placeholder="First name"
+              />
+              <InputField
+                type="text"
+                htmlFor="lastName"
+                name="lastName"
+                placeholder="Last name"
+              />
+              <InputField
+                type="text"
+                htmlFor="email"
+                name="email"
+                placeholder="Email"
+              />
+              <SubmitButton type="submit" value="Confirm" />
+            </Inputs>
+          </div>
         </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </>
   );
 };
 
@@ -116,12 +122,23 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
+const Heading = styled.p`
+  display: flex;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-dark-blue);
+  width: 58%;
+  text-align: center;
 `;
 
 const Inputs = styled.form`
   display: flex;
   flex-direction: column;
-  border: 4px solid red;
+  border: 4px solid var(--color-medium-blue);
   padding: 25px;
 `;
 

@@ -7,9 +7,7 @@ const Header = () => {
   const history = useHistory();
   return (
     <Wrapper>
-      <Logo onClick={() => history.push("/")}>
-        <h1>Sling Airlines</h1>
-      </Logo>
+      <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
       <Nav>
         {/* TODO: only show link if the user has a reservation already */}
         <>
@@ -23,19 +21,15 @@ const Header = () => {
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
-  background: var(--color-alabama-crimson);
+  align-items: flex-end;
+  background: var(--color-dark-blue);
   height: 110px;
-  padding: var(--padding-page) 18px;
+  padding: var(--padding-page) 24px;
 `;
 const Logo = styled.div`
-  background-image: url(${slingairLogo});
-  background-repeat: no-repeat;
-  background-position: left center, right center;
-  background-size: contain;
-  overflow: hidden;
-  text-indent: -1000px;
-  height: 60px;
-  width: 550px;
+  color: var(--color-lightest);
+  font-family: "Fredoka One", cursive;
+  font-size: 60px;
   cursor: pointer;
 `;
 const Nav = styled.nav`
@@ -44,10 +38,11 @@ const Nav = styled.nav`
   align-items: center;
 `;
 const StyledNavLink = styled(NavLink)`
-  background: var(--color-selective-yellow);
+  background: var(--color-light-blue);
   border: 1px solid transparent;
   border-radius: 4px;
-  color: var(--color-alabama-crimson);
+  color: var(--color-lightest);
+  text-shadow: var(--color-red) 1px 1px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,9 +61,9 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &:hover {
-    background: var(--color-alabama-crimson);
-    color: var(--color-selective-yellow);
-    border-color: var(--color-selective-yellow);
+    background: var(--color-yellow);
+    color: var(--color-lightest);
+    border-color: var(--color-lightest);
   }
 `;
 

@@ -76,8 +76,8 @@ const Wrapper = styled.ol`
   grid-template-columns: 30px 30px 60px 30px 30px 30px;
   gap: 12px 10px;
   background: #fff;
-  border-right: 15px solid var(--color-alabama-crimson);
-  border-left: 15px solid var(--color-alabama-crimson);
+  border-right: 15px solid var(--color-dark-blue);
+  border-left: 15px solid var(--color-dark-blue);
   margin: 24px 24px 0 0;
   padding: 48px 5px;
   height: 500px;
@@ -101,7 +101,7 @@ const Seat = styled.input`
 
   &:checked {
     span {
-      background: var(--color-alabama-crimson);
+      background: var(--color-orange);
       color: #fff;
       font-weight: 700;
     }
@@ -109,7 +109,7 @@ const Seat = styled.input`
 `;
 const SeatNumber = styled.span`
   border-radius: 2px;
-  color: var(--color-cadmium-red);
+  color: var(--color-red);
   font-family: var(--font-body);
   font-size: 14px;
   display: flex;
@@ -124,18 +124,18 @@ const SeatNumber = styled.span`
 `;
 const Available = styled(SeatNumber)`
   background: #fff;
-  border: 1px solid var(--color-alabama-crimson);
+  border: 1px solid var(--color-dark-blue);
   cursor: pointer;
 
   &.checked,
   &:hover {
-    background: var(--color-alabama-crimson);
+    background: var(--color-light-blue);
     color: #fff;
     font-weight: 700;
   }
 `;
 const Unavailable = styled(SeatNumber)`
-  background: var(--color-selective-yellow);
+  background: var(--color-yellow);
   cursor: not-allowed;
   opacity: 0.4;
 `;

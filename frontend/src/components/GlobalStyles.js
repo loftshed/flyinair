@@ -7,8 +7,15 @@ export default createGlobalStyle`
     --color-orange: #F79D00;
     --color-selective-yellow: #FDBB01;
     --color-desert-sand: #E3C4A6;
-    --font-heading: 'Permanent Marker', Arial, Helvetica, sans-serif;
-    --font-body: 'Kosugi', Arial, Helvetica, sans-serif;
+    --color-dark-blue: #1d3557;
+    --color-medium-blue: #457b9d;
+    --color-light-blue: #a8dadc;
+    --color-lightest: #f1faee;
+    --color-red: #e63946;
+    --color-yellow: #ffb703;
+    --color-orange: #fb8500;
+    --font-heading: 'Fredoka One', cursive;
+    --font-body: 'Kosugi', sans-serif;
     --padding-page: 24px;
   }
 

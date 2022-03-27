@@ -50,11 +50,12 @@ export default FlightSelect;
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
+  font-family: "Concert One", cursive;
+  justify-content: space-between;
   width: 100%;
-  height: 45px;
-  padding: 0px 18px;
-  background-color: #aa001e;
+  padding: 12px 24px;
+  background-color: var(--color-light-blue);
+  text-shadow: var(--color-red) 1px 1px;
 `;
 
 const CenteredDiv = styled.div`
@@ -67,4 +68,5 @@ const Selector = styled.select`
   font-family: Kosugi;
   font-size: 20px;
   height: 35px;
+  border-radius: 5px;
 `;

@@ -7,6 +7,7 @@ export const AppProvider = ({ children }) => {
   const [selectedFlight, setSelectedFlight] = useState("");
   const [selectedSeat, setSelectedSeat] = useState("");
   const [reservationId, setReservationId] = useState("");
+  const [currentReservation, setCurrentReservation] = useState({});
 
   return (
     <AppContext.Provider
@@ -19,6 +20,8 @@ export const AppProvider = ({ children }) => {
         setSelectedSeat,
         reservationId,
         setReservationId,
+        currentReservation,
+        setCurrentReservation,
       }}
     >
       {children}

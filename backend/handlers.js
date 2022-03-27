@@ -106,7 +106,7 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
     await client.connect();
     const reservationData = await reservationDb.findOne({ _id: reservationId });
     reservationData
-      ? res.status(200).json({ status: 200, flight: reservationData })
+      ? res.status(200).json({ status: 200, reservation: reservationData })
       : res.status(500).json({
           status: 500,
           data: reservationId,
