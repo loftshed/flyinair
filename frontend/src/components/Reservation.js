@@ -31,7 +31,7 @@ const Reservation = () => {
   return (
     <Wrapper>
       <BookingContainer>
-        <h3>Your reservation:</h3>
+        <Heading>Your reservation:</Heading>
         <Details style={{ display: "flex", flexDirection: "column" }}>
           <Item>
             <ItemHeading>Booking ID</ItemHeading>: {_id}
@@ -54,6 +54,10 @@ const Reservation = () => {
   );
 };
 
+const Heading = styled.h3`
+  color: var(--color-medium-blue);
+`;
+
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
@@ -67,7 +71,7 @@ const BookingContainer = styled.div`
   gap: 25px;
   flex-direction: column;
   align-items: center;
-  border: dashed 2px red;
+  border: dashed 2px var(--color-dark-blue);
   border-radius: 5px;
   padding: 25px;
 `;

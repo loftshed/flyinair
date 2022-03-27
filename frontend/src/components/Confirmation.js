@@ -19,13 +19,13 @@ const Confirmation = () => {
     })();
   }, [setCurrentReservation, reservationId]);
 
-  if (!currentReservation) return null;
+  if (!currentReservation._id) return null;
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
   return (
     <Wrapper>
       <BookingContainer>
-        <h3>Your booking is confirmed!</h3>
+        <Heading>Your booking is confirmed!</Heading>
         <Details style={{ display: "flex", flexDirection: "column" }}>
           <Item>
             <ItemHeading>Booking ID</ItemHeading>: {_id}
@@ -48,6 +48,10 @@ const Confirmation = () => {
   );
 };
 
+const Heading = styled.h3`
+  color: var(--color-medium-blue);
+`;
+
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
@@ -61,7 +65,7 @@ const BookingContainer = styled.div`
   gap: 25px;
   flex-direction: column;
   align-items: center;
-  border: dashed 2px red;
+  border: dashed 2px var(--color-dark-blue);
   border-radius: 5px;
   padding: 25px;
 `;
