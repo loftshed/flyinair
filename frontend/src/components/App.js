@@ -19,6 +19,7 @@ const App = () => {
           <Route exact path="/confirmed">
             <Confirmation />
           </Route>
+          <Route exact path="/reservation"></Route>
           <Route path="">404: Oops!</Route>
         </Switch>
         <Footer />

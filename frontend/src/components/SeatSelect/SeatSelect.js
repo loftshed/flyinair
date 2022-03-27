@@ -25,7 +25,7 @@ const SeatSelect = () => {
         email.value.indexOf(".") <= email.value.length - 3;
 
       if (firstNameValid && lastNameValid && emailValid) {
-        const response = await fetch("/api/add-reservation", {
+        const reservationResponse = await fetch("/api/add-reservation", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -39,9 +39,34 @@ const SeatSelect = () => {
             email: email.value,
           }),
         });
-        const newReservationId = await response.json().insertedId;
-        if (newReservationId) setReservationId(newReservationId);
+
+        const updateSeats = await fetch(
+          `/api/update-availability?flightNum=${selectedFlight}&seatId=${selectedSeat}`,
+          {
+            method: "PATCH",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              seats: { id: selectedSeat, isAvailable: false },
+            }),
+          }
+        );
+
+        const {
+          data: { insertedId },
+        } = await reservationResponse.json();
+
+        if (insertedId) {
+          setReservationId(insertedId);
+          console.log(insertedId);
+          history.push("/confirmed");
+          return;
+        }
       }
+
+      // TODO: update "isAvailable" on plane!!
     } catch (err) {
       console.log(err);
     }

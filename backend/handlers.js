@@ -12,6 +12,8 @@ const options = {
 };
 const client = new MongoClient(MONGO_URI, options);
 const db = client.db("slingair");
+const flightsDb = db.collection("flights");
+const reservationDb = db.collection("reservations");
 
 // use this package to generate unique ids: https://www.npmjs.com/package/uuid
 const { v4: uuidv4 } = require("uuid");
@@ -19,7 +21,7 @@ const { v4: uuidv4 } = require("uuid");
 const getFlights = async (req, res) => {
   try {
     await client.connect();
-    const flightsData = await db.collection("flights").find().toArray();
+    const flightsData = await flightsDb.find().toArray();
     flightsData
       ? res.status(200).json({ status: 200, flights: flightsData })
       : res.status(500).json({ status: 500, message: "Something went wrong." });
@@ -32,7 +34,7 @@ const getFlights = async (req, res) => {
 const getFlight = async ({ query: { flight } }, res) => {
   try {
     await client.connect();
-    const flightData = await db.collection("flights").findOne({ _id: flight });
+    const flightData = await flightsDb.findOne({ _id: flight });
     flightData
       ? res.status(200).json({ status: 200, flight: flightData })
       : res.status(500).json({
@@ -46,12 +48,38 @@ const getFlight = async ({ query: { flight } }, res) => {
   client.close();
 };
 
+const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
+  try {
+    await client.connect();
+    const { modifiedCount, matchedCount } = await flightsDb.updateOne(
+      { _id: flightNum, "seats.id": seatId },
+      { $set: { "seats.$.isAvailable": false } }
+    );
+    if (modifiedCount) {
+      res.status(200).json({
+        status: 200,
+        matchFound: !!matchedCount,
+        propsModified: modifiedCount,
+      });
+    } else {
+      res.status(500).json({
+        status: 500,
+        data: { seatId: seatId, flightNum: flightNum },
+        message: "Update failed.",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  client.close();
+};
+
 const addReservation = async ({ body }, res) => {
   try {
     await client.connect();
-    const reservationData = await db
-      .collection("reservations")
-      .insertOne((body = { _id: uuidv4(), ...body }));
+    const reservationData = await reservationDb.insertOne(
+      (body = { _id: uuidv4(), ...body })
+    );
     res.status(201).json({ status: 201, data: reservationData });
   } catch (err) {
     console.log(err);
@@ -63,10 +91,7 @@ const addReservation = async ({ body }, res) => {
 const getReservations = async (req, res) => {
   try {
     await client.connect();
-    const reservationData = await db
-      .collection("reservations")
-      .find()
-      .toArray();
+    const reservationData = await reservationDb.find().toArray();
     reservationData
       ? res.status(200).json({ status: 200, reservations: reservationData })
       : res.status(500).json({ status: 500, message: "Something went wrong." });
@@ -79,9 +104,7 @@ const getReservations = async (req, res) => {
 const getSingleReservation = async ({ query: { reservationId } }, res) => {
   try {
     await client.connect();
-    const reservationData = await db
-      .collection("reservations")
-      .findOne({ _id: reservationId });
+    const reservationData = await reservationDb.findOne({ _id: reservationId });
     reservationData
       ? res.status(200).json({ status: 200, flight: reservationData })
       : res.status(500).json({
@@ -98,10 +121,7 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
 const deleteReservation = async ({ query: { reservationId } }, res) => {
   try {
     await client.connect();
-    console.log(reservationId);
-    const deleteData = await db
-      .collection("reservations")
-      .deleteOne({ _id: reservationId });
+    const deleteData = await reservationDb.deleteOne({ _id: reservationId });
     if (deleteData.deletedCount) {
       console.log({ deleteData, message: "Delete successful" });
       res.status(204).json({ status: 204 });
@@ -121,33 +141,20 @@ const deleteReservation = async ({ query: { reservationId } }, res) => {
 const updateReservation = async ({ query: { reservationId }, body }, res) => {
   try {
     await client.connect();
-    const updatedReservation = await db
-      .collection("reservations")
-      .updateOne({ _id: reservationId }, { $set: body });
-    const { acknowledged, modifiedCount, matchedCount } = updatedReservation;
-
-    // try this inline wiht ternary
-    if (modifiedCount) {
-      res.status(200).json({
-        status: 200,
-        acknowledged: acknowledged,
-        matchFound: !!matchedCount,
-        propsModified: modifiedCount,
-        message: `ID match found, ${propsModified} properties modified`,
-      });
-    } else if (matchedCount) {
-      res.status(200).json({
-        status: 200,
-        acknowledged: acknowledged,
-        matchFound: !!matchedCount,
-        propsModified: modifiedCount,
-        message: "ID match found, no data changed.",
-      });
-    } else {
-      res
-        .status(500)
-        .json({ status: 500, data: body, message: "Update failed." });
-    }
+    const updatedReservation = await reservationDb.updateOne(
+      { _id: reservationId },
+      { $set: body }
+    );
+    const { modifiedCount, matchedCount } = updatedReservation;
+    modifiedCount
+      ? res.status(200).json({
+          status: 200,
+          matchFound: !!matchedCount,
+          propsModified: modifiedCount,
+        })
+      : res
+          .status(500)
+          .json({ status: 500, data: body, message: "Update failed." });
   } catch (err) {
     console.log(err);
   }
@@ -157,6 +164,7 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
 module.exports = {
   getFlights,
   getFlight,
+  updateAvailability,
   getReservations,
   addReservation,
   getSingleReservation,

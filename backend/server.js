@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const {
   getFlights,
   getFlight,
+  updateAvailability,
   getReservations,
   addReservation,
   getSingleReservation,
@@ -30,6 +31,8 @@ express()
 
   .get("/api/get-flights", getFlights)
   .get("/api/get-flight", getFlight)
+  .patch("/api/update-availability", updateAvailability)
+
   .get("/api/get-reservations", getReservations)
   .get("/api/get-reservation", getSingleReservation)
 

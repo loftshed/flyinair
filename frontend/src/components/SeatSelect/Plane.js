@@ -22,6 +22,8 @@ const Plane = () => {
     })();
   }, [selectedFlight]);
 
+  // TODO get seats to update
+
   return (
     <Wrapper>
       {seating && seating.length > 0 ? (
