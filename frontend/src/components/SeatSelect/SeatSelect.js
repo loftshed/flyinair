@@ -140,15 +140,25 @@ const Inputs = styled.form`
   flex-direction: column;
   border: 4px solid var(--color-medium-blue);
   padding: 25px;
+  &:active {
+    outline: var(--color-dark-blue);
+  }
 `;
 
-const InputField = styled.input``;
+const InputField = styled.input`
+  &:active {
+    outline: var(--color-dark-blue);
+  }
+`;
 
 const SubmitButton = styled.input`
+  color: #fff;
+  background-color: var(--color-yellow);
   cursor: pointer;
 
   &:hover {
-    background-color: pink;
+    background-color: var(--color-red);
+    border-color: var(--color-red);
   }
   &:active {
     background-color: yellow;

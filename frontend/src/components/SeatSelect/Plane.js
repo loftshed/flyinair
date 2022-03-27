@@ -10,7 +10,7 @@ const Plane = () => {
   useEffect(() => {
     (async () => {
       try {
-        if (selectedFlight !== "") {
+        if (selectedFlight !== "" && selectedFlight !== "Select a flight") {
           const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
           const {
             flight: { seats },
@@ -40,7 +40,7 @@ const Plane = () => {
                     onChange={(ev) => {
                       setSelectedSeat(ev.target.id);
                     }}
-                    checked={selectedSeat === seat.id}
+                    // checked={selectedSeat === seat.id}
                   />
                   <Available>{seat.id}</Available>
                 </>

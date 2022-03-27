@@ -69,4 +69,5 @@ const Selector = styled.select`
   font-size: 20px;
   height: 35px;
   border-radius: 5px;
+  padding: 0px 10px;
 `;

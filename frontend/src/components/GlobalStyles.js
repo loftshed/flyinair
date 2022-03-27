@@ -14,7 +14,7 @@ export default createGlobalStyle`
     --color-red: #e63946;
     --color-yellow: #ffb703;
     --color-orange: #fb8500;
-    --font-heading: 'Fredoka One', cursive;
+    --font-heading: 'Concert One', cursive;
     --font-body: 'Kosugi', sans-serif;
     --padding-page: 24px;
   }
@@ -85,8 +85,9 @@ input {
   input {
     font-size: 24px;
     height: 42px;
-    border: 2px solid var(--color-orange);
+    border: 2px solid var(--color-yellow);
     border-radius: 4px;
     padding: 0 12px;
+    margin: 2.5px 0px;
   }
 `;
