@@ -1,14 +1,17 @@
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Plane = () => {
   const { selectedFlight, setSelectedSeat, selectedSeat, reservationId } =
     useContext(AppContext);
   const [seating, setSeating] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         if (selectedFlight !== "" && selectedFlight !== "Select") {
           const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
@@ -18,6 +21,7 @@ const Plane = () => {
           setSeating(seats);
           setSelectedSeat("");
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -25,12 +29,33 @@ const Plane = () => {
   }, [selectedFlight, reservationId, setSelectedSeat]);
 
   // TODO get seats to update
+  const showPlaceholder = !selectedFlight || selectedFlight === "Select";
+  const showLoadingSpinner = (seating.length <= 0 && selectedFlight) || loading;
+  const showSeating =
+    seating && seating.length > 0 && selectedFlight !== "Select" && !loading;
 
   return (
     <PlaneContainer>
       <Flight>{selectedFlight !== "Select" ? selectedFlight : ""}</Flight>
       <Wrapper>
-        {seating && seating.length > 0 && selectedFlight !== "Select" ? (
+        {showPlaceholder && (
+          <Placeholder>Select a Flight to view seating.</Placeholder>
+        )}
+        {showLoadingSpinner && (
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <LoadingSpinner />
+          </div>
+        )}
+        {showSeating &&
           seating.map((seat) => (
             <SeatWrapper key={`seat-${seat.id}`}>
               <label>
@@ -54,10 +79,7 @@ const Plane = () => {
                 )}
               </label>
             </SeatWrapper>
-          ))
-        ) : (
-          <Placeholder>Select a Flight to view seating.</Placeholder>
-        )}
+          ))}
       </Wrapper>
       <Footer />
     </PlaneContainer>

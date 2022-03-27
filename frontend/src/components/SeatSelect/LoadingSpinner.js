@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { ImSpinner3 } from "react-icons/im";
 
 const LoadingSpinner = () => {
@@ -9,13 +9,9 @@ const LoadingSpinner = () => {
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
+export default LoadingSpinner;
+
+const Wrapper = styled.div``;
 
 const rotate = keyframes`
   from {
@@ -27,6 +23,8 @@ const rotate = keyframes`
 `;
 
 const Spinner = styled(ImSpinner3)`
+  width: 60px;
+  height: 60px;
   color: var(--color-dark-blue);
   animation: ${rotate} 2s linear infinite;
 `;
