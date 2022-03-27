@@ -1,24 +1,28 @@
 import styled from "styled-components";
 
 import logoImg from "../assets/air-sling.png";
+import { GiBackPain } from "react-icons/gi";
 
 const Footer = () => (
   <Wrapper>
-    <Logo src={logoImg} />
-    <Text>Now with less leg room!</Text>
+    <Logo />
+    <Text>Now more cramped and expensive!</Text>
   </Wrapper>
 );
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   background-color: var(--color-light-blue);
-  height: 60px;
+  height: fit-content;
   bottom: 0px;
 `;
-const Logo = styled.img`
-  height: 100%;
+const Logo = styled(GiBackPain)`
+  color: var(--color-yellow);
+  height: 40px;
+  width: 40px;
 `;
 const Text = styled.p`
   color: var(--color-dark-blue);
@@ -26,7 +30,7 @@ const Text = styled.p`
   padding: 0px 20px;
   font-size: 36px;
   text-align: center;
-  margin: 12px 0 0 24px;
+  margin: 12px 0px;
 `;
 
 export default Footer;
