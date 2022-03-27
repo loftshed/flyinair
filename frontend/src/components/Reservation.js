@@ -10,19 +10,19 @@ import { AppContext } from "./AppContext";
 const Reservation = () => {
   const { reservationId, setCurrentReservation, currentReservation } =
     useContext(AppContext);
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await fetch(
-          `/api/get-reservation?reservationId=${reservationId}`
-        );
-        const { reservation } = await data.json();
-        setCurrentReservation(reservation);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [setCurrentReservation, reservationId]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const data = await fetch(
+  //         `/api/get-reservation?reservationId=${reservationId}`
+  //       );
+  //       const { reservation } = await data.json();
+  //       setCurrentReservation(reservation);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  // }, [setCurrentReservation, reservationId]);
 
   if (!currentReservation) return null;
 

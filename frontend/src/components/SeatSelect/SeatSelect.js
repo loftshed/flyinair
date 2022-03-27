@@ -88,6 +88,18 @@ const SeatSelect = () => {
             }}
           >
             <Heading>Select your seat & provide your information!</Heading>
+            <div>
+              <Seat>
+                Selected seat:{" "}
+                <span style={{}}>
+                  {selectedSeat && selectedFlight !== "Select a flight" ? (
+                    <>{selectedSeat}</>
+                  ) : (
+                    <>■</>
+                  )}
+                </span>
+              </Seat>
+            </div>
             <Inputs onSubmit={handleSubmit}>
               <InputField
                 type="text"
@@ -132,6 +144,14 @@ const Heading = styled.p`
   font-weight: 600;
   color: var(--color-dark-blue);
   width: 58%;
+  text-align: center;
+`;
+
+const Seat = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-dark-blue);
+  width: 100%;
   text-align: center;
 `;
 

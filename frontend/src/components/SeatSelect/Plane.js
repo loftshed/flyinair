@@ -16,6 +16,7 @@ const Plane = () => {
             flight: { seats },
           } = await data.json();
           setSeating(seats);
+          setSelectedSeat("");
         }
       } catch (err) {
         console.log(err);
@@ -27,7 +28,7 @@ const Plane = () => {
 
   return (
     <Wrapper>
-      {seating && seating.length > 0 ? (
+      {seating && seating.length > 0 && selectedFlight !== "Select a flight" ? (
         seating.map((seat) => (
           <SeatWrapper key={`seat-${seat.id}`}>
             <label>
@@ -39,8 +40,10 @@ const Plane = () => {
                     name="seat"
                     onChange={(ev) => {
                       setSelectedSeat(ev.target.id);
+                      console.log(`Seat selected: ${selectedSeat}`);
+                      console.log(seat.id);
+                      console.log(ev.target.id);
                     }}
-                    // checked={selectedSeat === seat.id}
                   />
                   <Available>{seat.id}</Available>
                 </>
@@ -127,7 +130,7 @@ const Available = styled(SeatNumber)`
   border: 1px solid var(--color-dark-blue);
   cursor: pointer;
 
-  &.checked,
+  &:checked,
   &:hover {
     background: var(--color-light-blue);
     color: #fff;
