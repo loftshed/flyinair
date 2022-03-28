@@ -4,27 +4,41 @@
 import styled from "styled-components";
 import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContext";
+import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
 // use localstorage to persist reservation ID
 
 const Reservation = () => {
   const { reservationId, setCurrentReservation, currentReservation } =
     useContext(AppContext);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const data = await fetch(
-  //         `/api/get-reservation?reservationId=${reservationId}`
-  //       );
-  //       const { reservation } = await data.json();
-  //       setCurrentReservation(reservation);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  // }, [setCurrentReservation, reservationId]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetch(
+          `/api/get-reservation?reservationId=${reservationId}`
+        );
+        const { reservation } = await data.json();
+        setCurrentReservation(reservation);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [setCurrentReservation, reservationId]);
 
-  if (!currentReservation) return null;
+  if (!currentReservation)
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "100%",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <LoadingSpinner />
+      </div>
+    );
 
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
 
@@ -62,11 +62,13 @@ export default FlightSelect;
 
 const Heading = styled.h1`
   text-shadow: var(--color-red) 0px 1px 3px 3px;
-  font-family: "Kosugi", cursive;
+  font-family: "Kosugi";
   font-size: 18px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 5px 5px 11px;
+  letter-spacing: 3px;
   background-color: var(--color-yellow);
+  text-shadow: -2px 0px var(--color-red);
 `;
 
 const Wrapper = styled.div`
@@ -82,12 +84,15 @@ const Wrapper = styled.div`
 
 const CenteredDiv = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 307px;
   gap: 10px;
 `;
 
 const Selector = styled.select`
   font-family: Kosugi;
+  letter-spacing: 4px;
   font-size: 16px;
   font-weight: 600;
   color: var(--color-dark-blue);

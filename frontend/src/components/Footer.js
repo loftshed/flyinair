@@ -1,6 +1,4 @@
 import styled from "styled-components";
-
-import logoImg from "../assets/air-sling.png";
 import { GiBackPain } from "react-icons/gi";
 
 const Footer = () => (

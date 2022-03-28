@@ -21,7 +21,6 @@ const SeatSelect = () => {
     // TODO if incorrect data entered, highlight which field it came from
     ev.preventDefault();
     try {
-      setWaiting(true);
       const { firstName, lastName, email } = ev.currentTarget.elements;
 
       const firstNameValid = firstName.value.length >= 1;
@@ -29,8 +28,8 @@ const SeatSelect = () => {
       const emailValid =
         email.value.indexOf("@") >= 1 &&
         email.value.indexOf(".") <= email.value.length - 3;
-
       if (firstNameValid && lastNameValid && emailValid) {
+        setWaiting(true);
         const reservationResponse = await fetch("/api/add-reservation", {
           method: "POST",
           headers: {
@@ -60,13 +59,15 @@ const SeatSelect = () => {
           }
         );
 
-        const {
-          data: { insertedId },
-        } = await reservationResponse.json();
+        // const {
+        //   data: { insertedId },
+        // } = await reservationResponse.json();
 
-        if (insertedId) {
-          setReservationId(insertedId);
-          localStorage.setItem("reservationId", JSON.stringify(insertedId));
+        const { data } = await reservationResponse.json();
+        console.log(data);
+
+        if (data.insertedId) {
+          setReservationId(data.insertedId);
           history.push("/confirmed");
           setWaiting(false);
           return;
@@ -147,7 +148,12 @@ const SeatSelect = () => {
             {!waiting && <SubmitButton type="submit" value="Confirm" />}
             {waiting && (
               <Spinner>
-                <LoadingSpinner size={"30px"} color={"var(--color-lightest)"} />
+                <div style={{ transform: "translateY(1.5px)" }}>
+                  <LoadingSpinner
+                    size={"25px"}
+                    color={"var(--color-lightest)"}
+                  />
+                </div>
               </Spinner>
             )}
           </Inputs>
@@ -176,7 +182,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin-top: 80px;
   height: 100vh;
 `;
 

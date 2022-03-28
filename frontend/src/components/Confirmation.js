@@ -3,6 +3,11 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
+/* index.js:1 Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+    at SeatSelect (http://localhost:3000/static/js/main.chunk.js:2251:63)
+    
+    fix this*/
+
 const Confirmation = () => {
   const { reservationId, currentReservation, setCurrentReservation } =
     useContext(AppContext);
@@ -13,7 +18,7 @@ const Confirmation = () => {
           `/api/get-reservation?reservationId=${reservationId}`
         );
         const { reservation } = await data.json();
-        setCurrentReservation(reservation);
+        await setCurrentReservation(reservation);
       } catch (err) {
         console.log(err);
       }
