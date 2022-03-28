@@ -79,30 +79,10 @@ const SeatSelect = () => {
     <Wrapper>
       <div style={{ display: "flex", gap: "40px" }}>
         <Plane />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "25px",
-          }}
-        >
+        <DetailsContainer>
           <div>
             <Seat>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  fontSize: "40px",
-                  width: "100px",
-                  height: "100px",
-                  border: "4px solid",
-                  borderRadius: "3px",
-                }}
-              >
+              <SeatNum>
                 {selectedSeat && selectedFlight !== "Select" ? (
                   <div>
                     {selectedSeat}
@@ -119,29 +99,22 @@ const SeatSelect = () => {
                     <p>SEAT</p>
                   </div>
                 )}
-              </div>
+              </SeatNum>
             </Seat>
           </div>
           <Heading>Please provide your information:</Heading>
           <Inputs onSubmit={handleSubmit}>
             <InputField
-              type="text"
               htmlFor="firstName"
               name="firstName"
               placeholder="First name"
             />
             <InputField
-              type="text"
               htmlFor="lastName"
               name="lastName"
               placeholder="Last name"
             />
-            <InputField
-              type="text"
-              htmlFor="email"
-              name="email"
-              placeholder="Email"
-            />
+            <InputField htmlFor="email" name="email" placeholder="Email" />
             {!waiting && <SubmitButton type="submit" value="Confirm" />}
             {waiting && (
               <Spinner>
@@ -154,13 +127,21 @@ const SeatSelect = () => {
               </Spinner>
             )}
           </Inputs>
-        </div>
+        </DetailsContainer>
       </div>
     </Wrapper>
   );
 };
 
 export default SeatSelect;
+
+const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+`;
 
 const Spinner = styled.div`
   display: flex;
@@ -188,7 +169,6 @@ const Heading = styled.p`
   font-size: 18px;
   font-weight: 600;
   color: var(--color-dark-blue);
-  /* width: 58%; */
   text-align: center;
 `;
 
@@ -199,6 +179,18 @@ const Seat = styled.div`
   color: var(--color-dark-blue);
   width: 100%;
   justify-content: center;
+`;
+
+const SeatNum = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 40px;
+  width: 100px;
+  height: 100px;
+  border: 4px solid;
+  border-radius: 3px;
 `;
 
 const Inputs = styled.form`

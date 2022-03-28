@@ -11,10 +11,12 @@ import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 const Reservation = () => {
   const { reservationId, setCurrentReservation, currentReservation } =
     useContext(AppContext);
-  const [fakeLoading, setFakeLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const data = await fetch(
           `/api/get-reservation?reservationId=${reservationId}`
         );
@@ -23,16 +25,11 @@ const Reservation = () => {
       } catch (err) {
         console.log(err);
       }
+      setLoading(false);
     })();
   }, [setCurrentReservation, reservationId]);
 
-  // // setFakeLoading(true);
-  // setTimeout(() => {
-  //   setFakeLoading(false);
-  // }, Math.floor(Math.random() * 1000));
-  //|| fakeLoading
-
-  if (!currentReservation)
+  if (!currentReservation || loading)
     return (
       <div
         style={{

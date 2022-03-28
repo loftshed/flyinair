@@ -4,16 +4,22 @@ import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Plane = () => {
-  const { selectedFlight, setSelectedSeat, /*selectedSeat,*/ reservationId } =
+  const { selectedFlight, setSelectedSeat, reservationId } =
     useContext(AppContext);
   const [seating, setSeating] = useState([]);
   const [loading, setLoading] = useState(false);
+  // "Loading" state could probably be refined...
 
   useEffect(() => {
+    let isApiSubscribed = true;
     (async () => {
-      setLoading(true);
       try {
-        if (selectedFlight !== "" && selectedFlight !== "Select") {
+        setLoading(true);
+        if (
+          selectedFlight !== "" &&
+          selectedFlight !== "Select" &&
+          isApiSubscribed
+        ) {
           const data = await fetch(`/api/get-flight?flight=${selectedFlight}`);
           const {
             flight: { seats },
@@ -26,19 +32,24 @@ const Plane = () => {
         console.log(err);
       }
     })();
+    return () => {
+      isApiSubscribed = false; // try to find out why this works? edit: or doesn't?
+    };
   }, [selectedFlight, reservationId, setSelectedSeat]);
-  // TODO get seats to update
+
+  // Condensing render conditions into a single variable ///////////////////////////
   const showPlaceholder = !selectedFlight || selectedFlight === "Select";
   const showLoadingSpinner = (seating.length <= 0 && selectedFlight) || loading;
   const showSeating =
     seating && seating.length > 0 && selectedFlight !== "Select" && !loading;
+  //////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <PlaneContainer>
+    <Wrapper>
       <Flight>
         {selectedFlight !== "Select" && !loading ? selectedFlight : ""}
       </Flight>
-      <Wrapper>
+      <PlaneContainer>
         {showPlaceholder && (
           <Placeholder>Select a Flight to view seating.</Placeholder>
         )}
@@ -78,18 +89,53 @@ const Plane = () => {
               </label>
             </SeatWrapper>
           ))}
-      </Wrapper>
+      </PlaneContainer>
       <Footer />
-    </PlaneContainer>
+    </Wrapper>
   );
 };
 
-const PlaneContainer = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 0px 5px 0px #a8dadc;
   border-radius: 15px;
+`;
+
+const Flight = styled.div`
+  font-family: Kosugi;
+  font-weight: 800;
+  font-size: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-lightest);
+  background-color: var(--color-light-blue);
+  text-shadow: 4px 0px 0px var(--color-dark-blue),
+    -4px 0px 0px var(--color-yellow);
+  width: 100%;
+  height: 60px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  letter-spacing: 2px;
+`;
+
+const PlaneContainer = styled.ol`
+  display: grid;
+  justify-content: center;
+  grid-template-rows: repeat(10, 30px);
+  grid-template-columns: 30px 30px 60px 30px 30px 30px;
+  gap: 12px 10px;
+  background: #fff;
+  border-right: 15px solid var(--color-dark-blue);
+  border-left: 15px solid var(--color-dark-blue);
+  margin: 0px 24px 0px 24px;
+  padding: 24px 5px 12px 5px;
+  height: 100%;
+  width: 100%;
+  position: relative;
 `;
 
 const Placeholder = styled.div`
@@ -105,21 +151,6 @@ const Placeholder = styled.div`
   opacity: 0.5;
 `;
 
-const Wrapper = styled.ol`
-  display: grid;
-  justify-content: center;
-  grid-template-rows: repeat(10, 30px);
-  grid-template-columns: 30px 30px 60px 30px 30px 30px;
-  gap: 12px 10px;
-  background: #fff;
-  border-right: 15px solid var(--color-dark-blue);
-  border-left: 15px solid var(--color-dark-blue);
-  margin: 0px 24px 0px 24px;
-  padding: 24px 5px 12px 5px;
-  height: 100%;
-  width: 100%;
-  position: relative;
-`;
 const SeatWrapper = styled.li`
   display: flex;
   font-size: 12px;
@@ -136,7 +167,7 @@ const Seat = styled.input`
   margin: 0;
 
   &:checked {
-    span {
+    + span {
       background: var(--color-orange);
       color: #fff;
       font-weight: 700;
@@ -174,25 +205,6 @@ const Unavailable = styled(SeatNumber)`
   background: var(--color-yellow);
   cursor: not-allowed;
   opacity: 0.4;
-`;
-
-const Flight = styled.div`
-  font-family: Kosugi;
-  font-weight: 800;
-  font-size: 40px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: var(--color-lightest);
-  background-color: var(--color-light-blue);
-  text-shadow: 4px 0px 0px var(--color-dark-blue),
-    -4px 0px 0px var(--color-yellow);
-  width: 100%;
-  height: 60px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  letter-spacing: 2px;
 `;
 
 const Footer = styled.div`

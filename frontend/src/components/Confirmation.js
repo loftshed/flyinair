@@ -1,43 +1,42 @@
 import styled from "styled-components";
 import { useContext, useEffect } from "react";
+
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
-
-/* index.js:1 Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-    at SeatSelect (http://localhost:3000/static/js/main.chunk.js:2251:63)
-    
-    fix this*/
 
 const Confirmation = () => {
   const { reservationId, currentReservation, setCurrentReservation } =
     useContext(AppContext);
+
   useEffect(() => {
+    let isApiSubscribed = true;
     (async () => {
       try {
-        const data = await fetch(
-          `/api/get-reservation?reservationId=${reservationId}`
-        );
-        const { reservation } = await data.json();
-        await setCurrentReservation(reservation);
+        if (isApiSubscribed) {
+          const data = await fetch(
+            `/api/get-reservation?reservationId=${reservationId}`
+          );
+          const { reservation } = await data.json();
+          await setCurrentReservation(reservation);
+          localStorage.setItem(
+            "reservationId",
+            JSON.stringify(`${reservationId}`)
+          );
+        }
       } catch (err) {
         console.log(err);
       }
     })();
+    return () => {
+      isApiSubscribed = false; // try to find out why this works
+    };
   }, [setCurrentReservation, reservationId]);
 
   if (!currentReservation._id)
     return (
-      <div
-        style={{
-          display: "flex",
-          height: "100%",
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <NotLoaded>
         <LoadingSpinner />
-      </div>
+      </NotLoaded>
     );
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
@@ -67,8 +66,12 @@ const Confirmation = () => {
   );
 };
 
-const Heading = styled.h3`
-  color: var(--color-medium-blue);
+const NotLoaded = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Wrapper = styled.div`
@@ -89,14 +92,18 @@ const BookingContainer = styled.div`
   padding: 25px;
 `;
 
-const Details = styled.ul`
-  gap: 15px;
+// contents of BookingContainer
+const Heading = styled.h3`
+  color: var(--color-medium-blue);
+`;
+const ItemHeading = styled.span`
+  font-weight: 600;
 `;
 const Item = styled.li`
   font-size: 20px;
 `;
-const ItemHeading = styled.span`
-  font-weight: 600;
+const Details = styled.ul`
+  gap: 15px;
 `;
 
 export default Confirmation;
