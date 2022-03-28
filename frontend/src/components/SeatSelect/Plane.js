@@ -35,7 +35,9 @@ const Plane = () => {
 
   return (
     <PlaneContainer>
-      <Flight>{selectedFlight !== "Select" ? selectedFlight : ""}</Flight>
+      <Flight>
+        {selectedFlight !== "Select" && !loading ? selectedFlight : ""}
+      </Flight>
       <Wrapper>
         {showPlaceholder && (
           <Placeholder>Select a Flight to view seating.</Placeholder>

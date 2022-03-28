@@ -117,9 +117,10 @@ const ReservationInfo = styled(NavLink)`
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  padding: 5px;
   background-color: var(--color-red);
   color: var(--color-lightest);
+  padding: 5px 5px 5px 9px;
+  letter-spacing: 3px;
 
   cursor: pointer;
   &:hover {
