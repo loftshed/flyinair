@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
@@ -7,11 +7,13 @@ import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 const Confirmation = () => {
   const { reservationId, currentReservation, setCurrentReservation } =
     useContext(AppContext);
+  const [loading, setLoading] = useState([]);
 
   useEffect(() => {
     let isApiSubscribed = true;
     (async () => {
       try {
+        setLoading(true);
         if (isApiSubscribed) {
           const data = await fetch(
             `/api/get-reservation?reservationId=${reservationId}`
@@ -23,6 +25,7 @@ const Confirmation = () => {
             JSON.stringify(`${reservationId}`)
           );
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -32,7 +35,7 @@ const Confirmation = () => {
     };
   }, [setCurrentReservation, reservationId]);
 
-  if (!currentReservation._id)
+  if (loading)
     return (
       <NotLoaded>
         <LoadingSpinner />
@@ -41,28 +44,32 @@ const Confirmation = () => {
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
   return (
-    <Wrapper>
-      <BookingContainer>
-        <Heading>Your booking is confirmed!</Heading>
-        <Details style={{ display: "flex", flexDirection: "column" }}>
-          <Item>
-            <ItemHeading>Booking ID</ItemHeading>: {_id}
-          </Item>
-          <Item>
-            <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
-          </Item>
-          <Item>
-            <ItemHeading>Contact</ItemHeading>: {email}
-          </Item>
-          <Item>
-            <ItemHeading>Flight Number</ItemHeading>: {flight}
-          </Item>
-          <Item>
-            <ItemHeading>Seat</ItemHeading>: {seat}
-          </Item>
-        </Details>
-      </BookingContainer>
-    </Wrapper>
+    <>
+      {!loading && (
+        <Wrapper>
+          <BookingContainer>
+            <Heading>Your booking is confirmed!</Heading>
+            <Details style={{ display: "flex", flexDirection: "column" }}>
+              <Item>
+                <ItemHeading>Booking ID</ItemHeading>: {_id}
+              </Item>
+              <Item>
+                <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
+              </Item>
+              <Item>
+                <ItemHeading>Contact</ItemHeading>: {email}
+              </Item>
+              <Item>
+                <ItemHeading>Flight Number</ItemHeading>: {flight}
+              </Item>
+              <Item>
+                <ItemHeading>Seat</ItemHeading>: {seat}
+              </Item>
+            </Details>
+          </BookingContainer>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

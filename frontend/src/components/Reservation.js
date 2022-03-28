@@ -6,8 +6,6 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
-// use localstorage to persist reservation ID
-
 const Reservation = () => {
   const { reservationId, setCurrentReservation, currentReservation } =
     useContext(AppContext);
@@ -29,7 +27,7 @@ const Reservation = () => {
     })();
   }, [setCurrentReservation, reservationId]);
 
-  if (!currentReservation || loading)
+  if (loading)
     return (
       <div
         style={{
@@ -46,30 +44,31 @@ const Reservation = () => {
 
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
-  return (
-    <Wrapper>
-      <BookingContainer>
-        <Heading>Your reservation:</Heading>
-        <Details style={{ display: "flex", flexDirection: "column" }}>
-          <Item>
-            <ItemHeading>Booking ID</ItemHeading>: {_id}
-          </Item>
-          <Item>
-            <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
-          </Item>
-          <Item>
-            <ItemHeading>Contact</ItemHeading>: {email}
-          </Item>
-          <Item>
-            <ItemHeading>Flight Number</ItemHeading>: {flight}
-          </Item>
-          <Item>
-            <ItemHeading>Seat</ItemHeading>: {seat}
-          </Item>
-        </Details>
-      </BookingContainer>
-    </Wrapper>
-  );
+  if (!loading)
+    return (
+      <Wrapper>
+        <BookingContainer>
+          <Heading>Your reservation:</Heading>
+          <Details style={{ display: "flex", flexDirection: "column" }}>
+            <Item>
+              <ItemHeading>Booking ID</ItemHeading>: {_id}
+            </Item>
+            <Item>
+              <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
+            </Item>
+            <Item>
+              <ItemHeading>Contact</ItemHeading>: {email}
+            </Item>
+            <Item>
+              <ItemHeading>Flight Number</ItemHeading>: {flight}
+            </Item>
+            <Item>
+              <ItemHeading>Seat</ItemHeading>: {seat}
+            </Item>
+          </Details>
+        </BookingContainer>
+      </Wrapper>
+    );
 };
 
 const Heading = styled.h3`
