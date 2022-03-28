@@ -2,7 +2,7 @@
 /// inside an array of objects
 
 import styled from "styled-components";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
@@ -11,6 +11,7 @@ import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 const Reservation = () => {
   const { reservationId, setCurrentReservation, currentReservation } =
     useContext(AppContext);
+  const [fakeLoading, setFakeLoading] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -24,6 +25,12 @@ const Reservation = () => {
       }
     })();
   }, [setCurrentReservation, reservationId]);
+
+  // // setFakeLoading(true);
+  // setTimeout(() => {
+  //   setFakeLoading(false);
+  // }, Math.floor(Math.random() * 1000));
+  //|| fakeLoading
 
   if (!currentReservation)
     return (

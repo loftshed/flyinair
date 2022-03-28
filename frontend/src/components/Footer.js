@@ -4,7 +4,7 @@ import { GiBackPain } from "react-icons/gi";
 const Footer = () => (
   <Wrapper>
     <Logo />
-    <Text>Now more cramped and expensive!</Text>
+    <Text>Now with less legroom!</Text>
   </Wrapper>
 );
 

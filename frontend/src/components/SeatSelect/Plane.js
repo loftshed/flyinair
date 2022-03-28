@@ -4,7 +4,7 @@ import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Plane = () => {
-  const { selectedFlight, setSelectedSeat, selectedSeat, reservationId } =
+  const { selectedFlight, setSelectedSeat, /*selectedSeat,*/ reservationId } =
     useContext(AppContext);
   const [seating, setSeating] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,6 @@ const Plane = () => {
       }
     })();
   }, [selectedFlight, reservationId, setSelectedSeat]);
-
   // TODO get seats to update
   const showPlaceholder = !selectedFlight || selectedFlight === "Select";
   const showLoadingSpinner = (seating.length <= 0 && selectedFlight) || loading;
@@ -191,6 +190,7 @@ const Flight = styled.div`
   height: 60px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  letter-spacing: 2px;
 `;
 
 const Footer = styled.div`

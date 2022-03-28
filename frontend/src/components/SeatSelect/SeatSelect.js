@@ -58,10 +58,7 @@ const SeatSelect = () => {
             }),
           }
         );
-
-        // const {
-        //   data: { insertedId },
-        // } = await reservationResponse.json();
+        console.log(updateSeats);
 
         const { data } = await reservationResponse.json();
         console.log(data);
@@ -91,7 +88,6 @@ const SeatSelect = () => {
             gap: "25px",
           }}
         >
-          <Heading>Please provide your information,</Heading>
           <div>
             <Seat>
               <div
@@ -126,6 +122,7 @@ const SeatSelect = () => {
               </div>
             </Seat>
           </div>
+          <Heading>Please provide your information:</Heading>
           <Inputs onSubmit={handleSubmit}>
             <InputField
               type="text"
@@ -188,10 +185,10 @@ const Wrapper = styled.div`
 
 const Heading = styled.p`
   display: flex;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--color-dark-blue);
-  width: 58%;
+  /* width: 58%; */
   text-align: center;
 `;
 
