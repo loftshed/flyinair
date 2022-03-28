@@ -99,8 +99,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   box-shadow: 0px 0px 5px 0px #a8dadc;
   border-radius: 15px;
+  height: fit-content;
 `;
 
 const Flight = styled.div`
@@ -132,7 +134,7 @@ const PlaneContainer = styled.ol`
   border-right: 15px solid var(--color-dark-blue);
   border-left: 15px solid var(--color-dark-blue);
   margin: 0px 24px 0px 24px;
-  padding: 24px 5px 12px 5px;
+  padding: 45px 0px 30px 5px;
   height: 100%;
   width: 100%;
   position: relative;

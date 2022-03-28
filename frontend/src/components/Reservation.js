@@ -1,6 +1,3 @@
-/// TODO maybe restructure reservations to be stored like flights
-/// inside an array of objects
-
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
@@ -67,20 +64,23 @@ const Reservation = () => {
             </Item>
           </Details>
         </BookingContainer>
+        <Options>
+          <Button>Cancel Booking</Button>
+          <Button>Modify Booking</Button>
+        </Options>
       </Wrapper>
     );
 };
 
-const Heading = styled.h3`
-  color: var(--color-medium-blue);
-`;
-
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: Kosugi;
+  gap: 20px;
+  color: var(--color-dark-blue);
 `;
 
 const BookingContainer = styled.div`
@@ -91,6 +91,11 @@ const BookingContainer = styled.div`
   border: dashed 2px var(--color-dark-blue);
   border-radius: 5px;
   padding: 25px;
+  width: 534px;
+`;
+
+const Heading = styled.h3`
+  color: var(--color-medium-blue);
 `;
 
 const Details = styled.ul`
@@ -101,6 +106,29 @@ const Item = styled.li`
 `;
 const ItemHeading = styled.span`
   font-weight: 600;
+`;
+
+const Options = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  width: 330px;
+  /* border: dashed 2px var(--color-dark-blue); */
+  /* padding: 10px; */
+`;
+
+const Button = styled.button`
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--color-yellow);
+  font-family: inherit;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-orange);
+  }
 `;
 
 export default Reservation;

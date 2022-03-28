@@ -22,6 +22,9 @@ const Wrapper = styled.header`
   height: 90px;
   padding: var(--padding-page) 48px;
   border-bottom: solid 2px white;
+  @media screen and (min-width: 1080px) {
+    padding: 0 30%;
+  }
 `;
 const Logo = styled.div`
   transform: translateY(-2px);

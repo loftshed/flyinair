@@ -24,11 +24,11 @@ const FlightSelect = () => {
         if (!reservationId) {
           setReservationId(JSON.parse(localStorage.getItem("reservationId")));
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
     })();
-    setLoading(false);
   }, [setAvailableFlights, reservationId, setReservationId]);
 
   return (
@@ -40,7 +40,7 @@ const FlightSelect = () => {
       ) : (
         <Content>
           <CenteredDiv>
-            <Heading>Flight Number:</Heading>
+            <FlightNumSelect>Flight Number:</FlightNumSelect>
             <Selector
               name="flights"
               id="flights"
@@ -59,7 +59,6 @@ const FlightSelect = () => {
               })}
             </Selector>
           </CenteredDiv>
-
           <Nav>
             {!loading && (
               <ReservationInfo to="/view-reservation">
@@ -85,9 +84,13 @@ const Content = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 5px 45px;
+
   background-color: var(--color-light-blue);
   box-shadow: 0px 1px 1px 0px #a8dadc;
   height: 40px;
+  @media screen and (min-width: 1280px) {
+    padding: 5px 30%;
+  }
 `;
 
 const CenteredDiv = styled.div`
@@ -98,7 +101,7 @@ const CenteredDiv = styled.div`
   gap: 10px;
 `;
 
-const Heading = styled.h1`
+const FlightNumSelect = styled.h1`
   text-shadow: var(--color-red) 0px 1px 3px 3px;
   font-family: "Kosugi";
   font-size: 18px;
@@ -130,7 +133,7 @@ const LoadingGradient = styled.div`
   width: 1000%;
   height: 40px;
   box-shadow: 0px 1px 1px 0px #a8dadc;
-  animation: ${scroll} 2s linear infinite;
+  animation: ${scroll} 1s linear infinite;
 `;
 
 const Selector = styled.select`
@@ -154,32 +157,26 @@ const Nav = styled.nav`
 `;
 
 const ReservationInfo = styled(NavLink)`
-  text-shadow: var(--color-red) 0px 1px 3px 3px;
   font-family: "Kosugi", cursive;
   font-weight: 600;
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  background-color: var(--color-red);
+  background-color: var(--color-yellow);
   color: var(--color-lightest);
   padding: 5px 5px 5px 9px;
   letter-spacing: 3px;
+  text-shadow: 2px 0px var(--color-red);
+  text-decoration-line: none;
+  transition: all ease 100ms;
 
   cursor: pointer;
   &:hover {
-    background-color: var(--color-orange);
-  }
-  text-decoration: none;
-  transition: all ease 100ms;
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  &:hover {
     background: var(--color-orange);
-    color: var(--color-lightest);
     border-color: var(--color-lightest);
+    color: var(--color-lightest);
+  }
+  &:active {
+    background-color: var(--color-red);
   }
 `;

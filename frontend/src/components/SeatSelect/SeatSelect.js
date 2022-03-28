@@ -9,7 +9,7 @@ import LoadingSpinner from "./LoadingSpinner";
 const SeatSelect = () => {
   const { selectedFlight, selectedSeat, setReservationId } =
     useContext(AppContext);
-  const [waiting, setWaiting] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
@@ -29,7 +29,7 @@ const SeatSelect = () => {
         email.value.indexOf("@") >= 1 &&
         email.value.indexOf(".") <= email.value.length - 3;
       if (firstNameValid && lastNameValid && emailValid) {
-        setWaiting(true);
+        setLoading(true);
         const reservationResponse = await fetch("/api/add-reservation", {
           method: "POST",
           headers: {
@@ -65,8 +65,8 @@ const SeatSelect = () => {
 
         if (data.insertedId) {
           setReservationId(data.insertedId);
+          setLoading(false);
           history.push("/confirmed");
-          setWaiting(false);
           return;
         }
       }
@@ -77,70 +77,71 @@ const SeatSelect = () => {
 
   return (
     <Wrapper>
-      <div style={{ display: "flex", gap: "40px" }}>
-        <Plane />
-        <DetailsContainer>
-          <div>
-            <Seat>
-              <SeatNum>
-                {selectedSeat && selectedFlight !== "Select" ? (
-                  <div>
-                    {selectedSeat}
-                    <p style={{ fontSize: "14px" }}>
-                      {window && <>WINDOW</>}
-                      {middle && <>MIDDLE</>}
-                      {aisle && <>AISLE</>}
-                    </p>
-                  </div>
-                ) : (
-                  <div style={{ fontSize: "16px", color: "var(--color-red)" }}>
-                    <p>SELECT</p>
-                    <p>A</p>
-                    <p>SEAT</p>
-                  </div>
-                )}
-              </SeatNum>
-            </Seat>
-          </div>
-          <Heading>Please provide your information:</Heading>
-          <Inputs onSubmit={handleSubmit}>
-            <InputField
-              htmlFor="firstName"
-              name="firstName"
-              placeholder="First name"
-            />
-            <InputField
-              htmlFor="lastName"
-              name="lastName"
-              placeholder="Last name"
-            />
-            <InputField htmlFor="email" name="email" placeholder="Email" />
-            {!waiting && <SubmitButton type="submit" value="Confirm" />}
-            {waiting && (
-              <Spinner>
-                <div style={{ transform: "translateY(1.5px)" }}>
-                  <LoadingSpinner
-                    size={"25px"}
-                    color={"var(--color-lightest)"}
-                  />
+      <Plane />
+      <DetailsContainer>
+        <div>
+          <Seat>
+            <SeatNum>
+              {selectedSeat && selectedFlight !== "Select" ? (
+                <div>
+                  {selectedSeat}
+                  <p style={{ fontSize: "14px" }}>
+                    {window && <>WINDOW</>}
+                    {middle && <>MIDDLE</>}
+                    {aisle && <>AISLE</>}
+                  </p>
                 </div>
-              </Spinner>
-            )}
-          </Inputs>
-        </DetailsContainer>
-      </div>
+              ) : (
+                <div style={{ fontSize: "16px", color: "var(--color-red)" }}>
+                  <p>SELECT</p>
+                  <p>A</p>
+                  <p>SEAT</p>
+                </div>
+              )}
+            </SeatNum>
+          </Seat>
+        </div>
+        <Heading>Please provide your information:</Heading>
+        <Inputs onSubmit={handleSubmit}>
+          <InputField
+            htmlFor="firstName"
+            name="firstName"
+            placeholder="First name"
+          />
+          <InputField
+            htmlFor="lastName"
+            name="lastName"
+            placeholder="Last name"
+          />
+          <InputField htmlFor="email" name="email" placeholder="Email" />
+          {!loading && <SubmitButton type="submit" value="Confirm" />}
+          {loading && (
+            <Spinner>
+              <div style={{ transform: "translateY(1.5px)" }}>
+                <LoadingSpinner size={"25px"} color={"var(--color-lightest)"} />
+              </div>
+            </Spinner>
+          )}
+        </Inputs>
+      </DetailsContainer>
     </Wrapper>
   );
 };
 
 export default SeatSelect;
 
+const Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  padding: 0 30%;
+  justify-content: space-around;
+`;
+
 const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
 `;
 
 const Spinner = styled.div`
@@ -154,14 +155,6 @@ const Spinner = styled.div`
   border-radius: 4px;
   padding: 0 12px;
   margin: 2.5px 0px;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-  height: 100vh;
 `;
 
 const Heading = styled.p`
@@ -216,10 +209,10 @@ const SubmitButton = styled.input`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-red);
-    border-color: var(--color-red);
+    background-color: var(--color-orange);
+    border-color: var(--color-yellow);
   }
   &:active {
-    background-color: yellow;
+    background-color: var(--color-red);
   }
 `;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
@@ -8,6 +9,7 @@ const Confirmation = () => {
   const { reservationId, currentReservation, setCurrentReservation } =
     useContext(AppContext);
   const [loading, setLoading] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     let isApiSubscribed = true;
@@ -41,6 +43,7 @@ const Confirmation = () => {
         <LoadingSpinner />
       </NotLoaded>
     );
+
   const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
   return (
