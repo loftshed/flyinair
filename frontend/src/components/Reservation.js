@@ -12,6 +12,8 @@ const Reservation = () => {
     currentReservation,
     setShowCancelSuccessModal,
     setErrorMessage,
+    setSelectedFlight,
+    setSelectedSeat,
   } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);
@@ -148,6 +150,8 @@ const Reservation = () => {
             type="button"
             style={{ textShadow: "2px 0px var(--color-red)" }}
             onClick={() => {
+              setSelectedSeat(currentReservation.seat);
+              setSelectedFlight(currentReservation.flight);
               history.push("/modify-reservation");
             }}
           >

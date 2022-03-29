@@ -12,16 +12,8 @@ const DetailsInput = ({ type }) => {
     loading,
     setReservationId,
     setErrorMessage,
-    setSelectedFlight,
-    setSelectedSeat,
     currentReservation,
   } = useContext(AppContext);
-  console.log(currentReservation);
-
-  if (type === "modify") {
-    setSelectedSeat(currentReservation.seat);
-    setSelectedFlight(currentReservation.flight);
-  }
 
   const window = selectedSeat.includes("A") || selectedSeat.includes("F");
   const middle = selectedSeat.includes("B") || selectedSeat.includes("E");
@@ -34,42 +26,82 @@ const DetailsInput = ({ type }) => {
     ev.preventDefault();
     try {
       const { firstName, lastName, email } = ev.currentTarget.elements;
-
       const firstNameValid = firstName.value.length >= 1;
       const lastNameValid = lastName.value.length >= 1;
       const emailValid =
         email.value.indexOf("@") >= 1 &&
         email.value.indexOf(".") <= email.value.length - 3;
-      if (firstNameValid && lastNameValid && emailValid) {
-        setLoading(true);
-        const reservationResponse = await fetch("/api/add-reservation", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            flight: selectedFlight,
-            seat: selectedSeat,
-            givenName: firstName.value,
-            surname: lastName.value,
-            email: email.value,
-          }),
-        });
+      const validated = firstNameValid && lastNameValid && emailValid;
+      let fetchResult;
 
-        const updateSeats = await fetch(
+      if (validated) {
+        setLoading(true);
+
+        if (type === "modify") {
+          const releaseSeat = await fetch(
+            `/api/update-availability?flightNum=${currentReservation.flight}&seatId=${currentReservation.seat}&isAvailable`,
+            {
+              method: "PATCH",
+            }
+          );
+          console.log(releaseSeat);
+
+          fetchResult = await fetch(
+            `/api/update-reservation?reservationId=${currentReservation._id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                flight: selectedFlight,
+                seat: selectedSeat,
+                givenName: firstName.value,
+                surname: lastName.value,
+                email: email.value,
+              }),
+            }
+          );
+          console.log(fetchResult);
+        }
+        // end of "modify"
+        ////////
+
+        if (type === "new") {
+          fetchResult = await fetch("/api/add-reservation", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              flight: selectedFlight,
+              seat: selectedSeat,
+              givenName: firstName.value,
+              surname: lastName.value,
+              email: email.value,
+            }),
+          });
+        }
+
+        const getNewSeat = await fetch(
           `/api/update-availability?flightNum=${selectedFlight}&seatId=${selectedSeat}&isAvailable=n`,
           {
             method: "PATCH",
           }
         );
-        console.log(updateSeats);
+        console.log(getNewSeat);
 
-        const { data } = await reservationResponse.json();
-        console.log(data);
+        const { insertedId, propsModified } = await fetchResult.json();
 
-        if (data.insertedId) {
-          setReservationId(data.insertedId);
+        if (insertedId) {
+          setReservationId(insertedId);
+          setLoading(false);
+          history.push("/confirmed");
+          return;
+        }
+
+        if (propsModified) {
           setLoading(false);
           history.push("/confirmed");
           return;
@@ -85,7 +117,7 @@ const DetailsInput = ({ type }) => {
   return (
     <Wrapper>
       <ModifyHeader>
-        {type === "modify" ? "MODIFY YOUR BOOKING" : "CREATE YOUR BOOKING"}
+        {type === "modify" ? "MODIFY YOUR BOOKING" : "CREATE A NEW BOOKING"}
       </ModifyHeader>
       <div>
         <Seat>
@@ -126,7 +158,7 @@ const DetailsInput = ({ type }) => {
             htmlFor="firstName"
             name="firstName"
             placeholder={
-              type === "new" ? "First name" : currentReservation.givenName
+              type === "new" ? "Last name" : currentReservation.givenName
             }
           />
           <InputField
@@ -135,6 +167,8 @@ const DetailsInput = ({ type }) => {
             placeholder={
               type === "new" ? "Last name" : currentReservation.surname
             }
+
+            // change to value
           />
           <InputField
             htmlFor="email"

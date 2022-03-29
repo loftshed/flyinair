@@ -82,10 +82,12 @@ const updateAvailability = async (
 const addReservation = async ({ body }, res) => {
   try {
     await client.connect();
-    const reservationData = await reservationDb.insertOne(
+    const { insertedId } = await reservationDb.insertOne(
       (body = { _id: uuidv4(), ...body })
     );
-    res.status(201).json({ status: 201, data: reservationData });
+    res
+      .status(201)
+      .json({ status: 201, insertedId: insertedId, success: true });
   } catch (err) {
     err ? console.log(err) : client.close();
     res.status(500).json({ status: 500, data: body, error: err });
@@ -150,8 +152,8 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
     modifiedCount
       ? res.status(200).json({
           status: 200,
-          matchFound: !!matchedCount,
           propsModified: modifiedCount,
+          success: true,
         })
       : res
           .status(500)

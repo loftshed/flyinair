@@ -5,8 +5,7 @@ import { MdOutlineAirplanemodeInactive } from "react-icons/md";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
 const CancelSuccessModal = () => {
-  const { setShowCancelSuccessModal, setSelectedSeat, setSelectedFlight } =
-    useContext(AppContext);
+  const { setShowCancelSuccessModal } = useContext(AppContext);
   const [showSpinner, setShowSpinner] = useState(false);
   const handleConfirm = () => {
     setShowSpinner(true);
