@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-const LoadingGradient = ({ color, size }) => {
+const LoadingGradient = () => {
   return (
     <>
       <Gradient />

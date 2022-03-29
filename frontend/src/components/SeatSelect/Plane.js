@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../Anim/LoadingSpinner";
 
 const Plane = () => {
   const { selectedFlight, setSelectedSeat, reservationId, setErrorMessage } =

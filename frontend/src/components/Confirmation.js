@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "./AppContext";
-import LoadingSpinner from "./SeatSelect/LoadingSpinner";
+import LoadingSpinner from "./Anim/LoadingSpinner";
 
 const Confirmation = () => {
   const {

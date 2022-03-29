@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../Anim/LoadingSpinner";
 
 const DetailsInput = ({ type }) => {
   const {

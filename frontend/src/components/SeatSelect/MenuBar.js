@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
-import LoadingGradient from "./LoadingGradient";
+import LoadingGradient from "../Anim/LoadingGradient";
 
 const MenuBar = () => {
   const [loading, setLoading] = useState(false);

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { AppContext } from "./AppContext";
 import { MdOutlineAirplanemodeInactive } from "react-icons/md";
-import LoadingSpinner from "./SeatSelect/LoadingSpinner";
+import LoadingSpinner from "./Anim/LoadingSpinner";
 
 const CancelSuccessModal = () => {
   const { setShowCancelSuccessModal } = useContext(AppContext);
