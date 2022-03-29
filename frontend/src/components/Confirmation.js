@@ -36,7 +36,7 @@ const Confirmation = () => {
     };
   }, [setCurrentReservation, reservationId]);
 
-  if (!currentReservation._id || loading)
+  if (!currentReservation || loading)
     return (
       <NotLoaded>
         <Border>

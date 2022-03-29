@@ -8,6 +8,7 @@ export const AppProvider = ({ children }) => {
   const [selectedSeat, setSelectedSeat] = useState("");
   const [reservationId, setReservationId] = useState("");
   const [currentReservation, setCurrentReservation] = useState({});
+  const [showCancelSuccessModal, setShowCancelSuccessModal] = useState(false);
 
   return (
     <AppContext.Provider
@@ -22,6 +23,8 @@ export const AppProvider = ({ children }) => {
         setReservationId,
         currentReservation,
         setCurrentReservation,
+        showCancelSuccessModal,
+        setShowCancelSuccessModal,
       }}
     >
       {children}
