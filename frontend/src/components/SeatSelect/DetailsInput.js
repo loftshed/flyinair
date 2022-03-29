@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import LoadingSpinner from "./LoadingSpinner";
 
-const DetailsInput = () => {
+const DetailsInput = ({ type }) => {
   const {
     selectedFlight,
     selectedSeat,
@@ -12,7 +12,16 @@ const DetailsInput = () => {
     loading,
     setReservationId,
     setErrorMessage,
+    setSelectedFlight,
+    setSelectedSeat,
+    currentReservation,
   } = useContext(AppContext);
+  console.log(currentReservation);
+
+  if (type === "modify") {
+    setSelectedSeat(currentReservation.seat);
+    setSelectedFlight(currentReservation.flight);
+  }
 
   const window = selectedSeat.includes("A") || selectedSeat.includes("F");
   const middle = selectedSeat.includes("B") || selectedSeat.includes("E");
@@ -75,6 +84,9 @@ const DetailsInput = () => {
 
   return (
     <Wrapper>
+      <ModifyHeader>
+        {type === "modify" ? "MODIFY YOUR BOOKING" : "CREATE YOUR BOOKING"}
+      </ModifyHeader>
       <div>
         <Seat>
           <SeatNum>
@@ -105,19 +117,30 @@ const DetailsInput = () => {
           gap: "20px",
         }}
       >
-        <Heading>Please provide your information:</Heading>
+        <Heading>
+          {type === "new" && "Please enter your information"}
+          {type === "modify" && "Please update your information"}
+        </Heading>
         <Inputs onSubmit={handleSubmit}>
           <InputField
             htmlFor="firstName"
             name="firstName"
-            placeholder="First name"
+            placeholder={
+              type === "new" ? "First name" : currentReservation.givenName
+            }
           />
           <InputField
             htmlFor="lastName"
             name="lastName"
-            placeholder="Last name"
+            placeholder={
+              type === "new" ? "Last name" : currentReservation.surname
+            }
           />
-          <InputField htmlFor="email" name="email" placeholder="Email" />
+          <InputField
+            htmlFor="email"
+            name="email"
+            placeholder={type === "new" ? "Email" : currentReservation.email}
+          />
           {!loading && <SubmitButton type="submit" value="Confirm" />}
           {loading && (
             <Spinner>
@@ -221,4 +244,10 @@ const SelectASeat = styled.p`
   font-size: 16px;
   color: var(--color-red);
   /* filter: drop-shadow(0.5px 1px 0px var(--color-medium-blue)); */
+`;
+
+const ModifyHeader = styled.div`
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--color-red);
 `;

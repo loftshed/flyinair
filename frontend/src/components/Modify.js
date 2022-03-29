@@ -3,11 +3,12 @@ import Plane from "./SeatSelect/Plane";
 import DetailsInput from "./SeatSelect/DetailsInput";
 
 const Modify = () => {
+  const inputType = "modify";
   return (
     <Wrapper>
       <Border>
         <Plane />
-        <DetailsInput />
+        <DetailsInput type={inputType} />
       </Border>
     </Wrapper>
   );
@@ -24,13 +25,12 @@ const Wrapper = styled.div`
 `;
 
 const Border = styled.div`
-  gap: 20px;
   display: flex;
-  flex-direction: row;
-  height: 100%;
   width: var(--main-width);
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  padding: 50px;
+  gap: 35px;
   border-left: 3px dashed var(--color-yellow);
   border-right: 3px dashed var(--color-yellow);
 `;
