@@ -1,15 +1,19 @@
 import styled from "styled-components";
-import { GiBackPain } from "react-icons/gi";
+import { GiBackPain, GiPathDistance, GiEarthAmerica } from "react-icons/gi";
 
 const Footer = () => (
-  <Wrapper>
-    <Border>
-      <Logo />
-      <Text>
-        Won't stretch your budget- <Test>or your legs!</Test>
-      </Text>
-    </Border>
-  </Wrapper>
+  <>
+    <Wrapper>
+      <Border>
+        <Logo />
+        <Text>
+          Won't stretch your budget- <Test>or your legs!</Test>
+        </Text>
+      </Border>
+    </Wrapper>
+    <Earth />
+    <Trail />
+  </>
 );
 
 const Test = styled.div`
@@ -47,6 +51,31 @@ const Border = styled.div`
   width: var(--main-width);
   border-left: 3px dashed var(--color-lightest);
   border-right: 3px dashed var(--color-lightest);
+`;
+
+const Earth = styled(GiEarthAmerica)`
+  color: #ede3cb;
+  position: fixed;
+  overflow: none;
+  width: 996px;
+  height: 996px;
+  bottom: -300px;
+  right: -300px;
+  @media (max-width: 1280px) {
+    right: -600px;
+  }
+`;
+const Trail = styled(GiPathDistance)`
+  color: #ede3cb;
+  position: fixed;
+  overflow: none;
+  left: -350px;
+  width: 996px;
+  height: 996px;
+  transform: rotate(-20deg);
+  @media (max-width: 1280px) {
+    left: -500px;
+  }
 `;
 
 export default Footer;

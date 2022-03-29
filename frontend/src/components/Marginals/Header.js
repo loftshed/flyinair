@@ -1,26 +1,36 @@
 import styled from "styled-components";
 import { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import MenuBar from "../SeatSelect/MenuBar";
 import { AppContext } from "../AppContext";
 
 const Header = () => {
   const { setSelectedFlight, setSelectedSeat } = useContext(AppContext);
   const history = useHistory();
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <>
       <Wrapper>
-        <CenteredDiv>
-          <Logo
-            onClick={() => {
-              history.push("/");
-              setSelectedFlight("");
-              setSelectedSeat("");
-            }}
-          >
-            FlyinAir✈️
-          </Logo>
-        </CenteredDiv>
+        <BgDiv>
+          <CenteredDiv>
+            <>
+              {/* cheeseball way of getting around annoying bug when clicking logo on seat select page */}
+              {location.pathname === "/" && <Logo>FlyinAir✈️</Logo>}
+              {location.pathname !== "/" && (
+                <Logo
+                  onClick={() => {
+                    history.push("/");
+                    setSelectedFlight("");
+                    setSelectedSeat("");
+                  }}
+                >
+                  FlyinAir✈️
+                </Logo>
+              )}
+            </>
+          </CenteredDiv>
+        </BgDiv>
       </Wrapper>
       <MenuBar />
     </>
@@ -34,6 +44,15 @@ const Wrapper = styled.header`
   background: var(--color-dark-blue);
   height: 120px;
   border-bottom: solid 2px white;
+`;
+
+const BgDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-dark-blue);
+  width: 100%;
+  height: 100%;
 `;
 
 const CenteredDiv = styled.div`
