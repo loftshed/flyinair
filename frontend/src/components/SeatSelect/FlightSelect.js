@@ -71,7 +71,7 @@ const FlightSelect = () => {
               </Selector>
             </div>
             <Nav>
-              {!loading && (
+              {!loading && reservationId && (
                 <ReservationInfo to="/view-reservation">
                   Your Reservation
                 </ReservationInfo>

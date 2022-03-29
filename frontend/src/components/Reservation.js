@@ -4,8 +4,12 @@ import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
 const Reservation = () => {
-  const { reservationId, setCurrentReservation, currentReservation } =
-    useContext(AppContext);
+  const {
+    reservationId,
+    setReservationId,
+    setCurrentReservation,
+    currentReservation,
+  } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,6 +27,32 @@ const Reservation = () => {
       }
     })();
   }, [setCurrentReservation, reservationId]);
+
+  const handleDeleteReservation = async () => {
+    try {
+      const updateSeats = await fetch(
+        `/api/update-availability?flightNum=${currentReservation.flight}&seatId=${currentReservation.seat}&isAvailable`,
+        {
+          method: "PATCH",
+        }
+      );
+      console.log(updateSeats);
+      const deleteReservation = await fetch(
+        `/api/delete-reservation?reservationId=${reservationId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (deleteReservation.ok && updateSeats.ok) {
+        setReservationId("");
+        setCurrentReservation({});
+        localStorage.clear("reservationId");
+        console.log("Reservation deleted successfully.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   if (loading)
     return (
@@ -68,8 +98,15 @@ const Reservation = () => {
             </Details>
           </BookingContainer>
           <Options>
-            <Button>Cancel Booking</Button>
-            <Button>Modify Booking</Button>
+            <Button
+              type="button"
+              onClick={() => {
+                handleDeleteReservation();
+              }}
+            >
+              Cancel Booking
+            </Button>
+            <Button type="button">Modify Booking</Button>
           </Options>
         </Border>
       </Wrapper>

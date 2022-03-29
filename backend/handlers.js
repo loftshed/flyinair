@@ -46,18 +46,26 @@ const getFlight = async ({ query: { flight } }, res) => {
   }
 };
 
-const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
+const updateAvailability = async (
+  { query: { flightNum, seatId, isAvailable } },
+  res
+) => {
   try {
     await client.connect();
+    const toggle = isAvailable === "n" ? false : true;
     const { modifiedCount, matchedCount } = await flightsDb.updateOne(
       { _id: flightNum, "seats.id": seatId },
-      { $set: { "seats.$.isAvailable": false } }
+      { $set: { "seats.$.isAvailable": toggle } }
     );
     if (modifiedCount) {
+      console.log({
+        modifiedCount: modifiedCount,
+        matchedCount: matchedCount,
+        message: "Update successful",
+      });
       res.status(200).json({
         status: 200,
-        matchFound: !!matchedCount,
-        propsModified: modifiedCount,
+        data: { matchFound: !!matchedCount, propsModified: modifiedCount },
       });
     } else {
       res.status(500).json({

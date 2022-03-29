@@ -46,16 +46,9 @@ const SeatSelect = () => {
         });
 
         const updateSeats = await fetch(
-          `/api/update-availability?flightNum=${selectedFlight}&seatId=${selectedSeat}`,
+          `/api/update-availability?flightNum=${selectedFlight}&seatId=${selectedSeat}&isAvailable=n`,
           {
             method: "PATCH",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              seats: { id: selectedSeat, isAvailable: false },
-            }),
           }
         );
         console.log(updateSeats);

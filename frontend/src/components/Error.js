@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 const Error = () => {
   return (
     <Wrapper>
-      <Message>Dang!</Message>
-      <Bug />
-      <Message>
-        An error has occurred -- probably because of something you did.
-      </Message>
-      <StyledLink to="/">Click here to return home.</StyledLink>
+      <Borders>
+        <Message>Dang!</Message>
+        <Bug />
+        <Message>
+          An error has occurred -- probably because of something you did.
+        </Message>
+        <StyledLink to="/">Click here to return home.</StyledLink>
+      </Borders>
     </Wrapper>
   );
 };
@@ -24,6 +26,18 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+`;
+
+const Borders = styled.div`
+  display: flex;
+  width: var(--main-width);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 35px;
+  border-left: 3px dashed var(--color-yellow);
+  border-right: 3px dashed var(--color-yellow);
 `;
 
 const Bug = styled(RiBug2Line)`

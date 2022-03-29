@@ -5,10 +5,17 @@ const Footer = () => (
   <Wrapper>
     <Border>
       <Logo />
-      <Text>Now with less legroom!</Text>
+      <Text>
+        Won't stretch your budget- <Test>or your legs!</Test>
+      </Text>
     </Border>
   </Wrapper>
 );
+
+const Test = styled.div`
+  display: inline-block;
+  transform: skewX(-10deg);
+`;
 
 const Wrapper = styled.div`
   display: flex;
