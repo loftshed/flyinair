@@ -1,7 +1,8 @@
 import { useEffect, useContext, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+import LoadingGradient from "./LoadingGradient";
 
 const MenuBar = () => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,7 @@ const MenuBar = () => {
     setErrorMessage,
   } = useContext(AppContext);
   const history = useHistory();
-  // console.log(history.location.pathname);
+  const location = useLocation();
 
   useEffect(() => {
     (async () => {
@@ -44,41 +45,36 @@ const MenuBar = () => {
   return (
     <Wrapper style={{ overflow: "hidden" }}>
       {!availableFlights[0] || loading ? (
-        <div
-          style={{ display: "flex", height: "40px", justifyContent: "center" }}
-        >
-          <div
-            style={{
-              width: "1080px",
-              height: "100%",
-              backgroundColor: "none",
-              borderLeft: "3px dashed red",
-            }}
-          />
+        <Content>
           <LoadingGradient />
-        </div>
+        </Content>
       ) : (
         <Content>
           <CenteredDiv>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <FlightNumSelect>Flight Number:</FlightNumSelect>
-              <Selector
-                name="flights"
-                id="flights"
-                onChange={(ev) => {
-                  setSelectedFlight(ev.target.value);
-                }}
-                defaultValue={"default"}
-              >
-                <option key={"default"}>Select</option>
-                {availableFlights.map(({ _id }) => {
-                  return (
-                    <option key={_id} value={_id}>
-                      {_id}
-                    </option>
-                  );
-                })}
-              </Selector>
+              {(location.pathname === "/" ||
+                location.pathname === "/modify-reservation") && (
+                <>
+                  <FlightNumSelect>Flight Number:</FlightNumSelect>
+                  <Selector
+                    name="flights"
+                    id="flights"
+                    onChange={(ev) => {
+                      setSelectedFlight(ev.target.value);
+                    }}
+                    defaultValue={"default"}
+                  >
+                    <option key={"default"}>Select</option>
+                    {availableFlights.map(({ _id }) => {
+                      return (
+                        <option key={_id} value={_id}>
+                          {_id}
+                        </option>
+                      );
+                    })}
+                  </Selector>
+                </>
+              )}
             </div>
             <Nav>
               {!loading && reservationId && (
@@ -98,6 +94,9 @@ export default MenuBar;
 
 const Wrapper = styled.div`
   position: relative;
+  /* & > * {
+    font-family: "Kosugi";
+  } */
 `;
 
 const Content = styled.div`
@@ -129,30 +128,6 @@ const FlightNumSelect = styled.h1`
   letter-spacing: 3px;
   background-color: var(--color-yellow);
   text-shadow: -2px 0px var(--color-red);
-`;
-
-const scroll = keyframes`
-0% {
-  transform: translateX(0px)
-}
-100% {
-  transform: translateX(-50%)
-}
-`;
-
-const LoadingGradient = styled.div`
-  position: absolute;
-  background: rgb(168, 218, 220);
-  background: linear-gradient(
-    90deg,
-    rgba(168, 218, 220, 1) 0%,
-    rgba(104, 120, 142, 1) 50%,
-    rgba(168, 218, 220, 1) 100%
-  );
-  width: 1000%;
-  height: 40px;
-  box-shadow: 0px 1px 1px 0px #a8dadc;
-  animation: ${scroll} 1s linear infinite;
 `;
 
 const Selector = styled.select`

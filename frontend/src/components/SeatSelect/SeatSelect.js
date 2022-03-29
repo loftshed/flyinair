@@ -8,11 +8,7 @@ import CancelSuccessModal from "../CancelSuccessModal";
 import DetailsInput from "./DetailsInput";
 
 const SeatSelect = () => {
-  const {
-    showCancelSuccessModal,
-    // setErrorMessage,
-    // setLoading,
-  } = useContext(AppContext);
+  const { showCancelSuccessModal } = useContext(AppContext);
   const inputType = "new";
 
   if (showCancelSuccessModal === true) {

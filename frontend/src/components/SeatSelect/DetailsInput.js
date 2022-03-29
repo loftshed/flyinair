@@ -158,7 +158,7 @@ const DetailsInput = ({ type }) => {
             htmlFor="firstName"
             name="firstName"
             placeholder={
-              type === "new" ? "Last name" : currentReservation.givenName
+              type === "new" ? "First name" : currentReservation.givenName
             }
           />
           <InputField

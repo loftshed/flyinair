@@ -49,7 +49,6 @@ const Plane = () => {
 
   // Condensing render conditions into a single variable ///////////////////////////
   const showPlaceholder = !selectedFlight || selectedFlight === "Select";
-  // const showLoadingSpinner = (seating.length <= 0 && selectedFlight) || loading;
   const showLoadingSpinner = (seating.length <= 0 && selectedFlight) || loading;
   const showSeating =
     seating && seating.length > 0 && selectedFlight !== "Select" && !loading;

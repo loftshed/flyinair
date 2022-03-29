@@ -18,29 +18,13 @@ const CancelSuccessModal = () => {
   return (
     <Wrapper>
       <Borders>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "40px",
-          }}
-        >
+        <Modal>
           {showSpinner ? (
             <LoadingSpinner />
           ) : (
             <>
               <PlaneIcon />
-              <div
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "600",
-                  color: "var(--color-dark-blue)",
-                }}
-              >
-                Your booking was cancelled successfully.
-              </div>
+              <Details>Your booking was cancelled successfully.</Details>
               <Button
                 onClick={() => {
                   handleConfirm();
@@ -50,7 +34,7 @@ const CancelSuccessModal = () => {
               </Button>
             </>
           )}
-        </div>
+        </Modal>
       </Borders>
     </Wrapper>
   );
@@ -80,6 +64,20 @@ const Borders = styled.div`
 const PlaneIcon = styled(MdOutlineAirplanemodeInactive)`
   width: 300px;
   height: 300px;
+  color: var(--color-dark-blue);
+`;
+
+const Modal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+`;
+
+const Details = styled.p`
+  font-size: 20px;
+  font-weight: 600;
   color: var(--color-dark-blue);
 `;
 
