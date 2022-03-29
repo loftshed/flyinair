@@ -1,9 +1,10 @@
 import { useEffect, useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled, { keyframes } from "styled-components";
 
 const FlightSelect = () => {
+  const [loading, setLoading] = useState(false);
   const {
     availableFlights,
     setAvailableFlights,
@@ -11,8 +12,8 @@ const FlightSelect = () => {
     reservationId,
     setReservationId,
   } = useContext(AppContext);
-
-  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  console.log(history.location.pathname);
 
   useEffect(() => {
     (async () => {

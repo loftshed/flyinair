@@ -32,7 +32,7 @@ const Logo = styled(GiBackPain)`
   height: 40px;
   width: 40px;
 `;
-const Text = styled.p`
+const Text = styled.div`
   color: var(--color-dark-blue);
   font-family: var(--font-heading);
   padding: 0px 20px;

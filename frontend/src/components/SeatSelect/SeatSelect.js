@@ -86,10 +86,10 @@ const SeatSelect = () => {
                     </p>
                   </div>
                 ) : (
-                  <div style={{ fontSize: "16px", color: "var(--color-red)" }}>
-                    <p>SELECT</p>
-                    <p>A</p>
-                    <p>SEAT</p>
+                  <div>
+                    <SelectASeat>SELECT</SelectASeat>
+                    <SelectASeat>A</SelectASeat>
+                    <SelectASeat>SEAT</SelectASeat>
                   </div>
                 )}
               </SeatNum>
@@ -136,6 +136,12 @@ const SeatSelect = () => {
 };
 
 export default SeatSelect;
+
+const SelectASeat = styled.p`
+  font-size: 16px;
+  color: var(--color-red);
+  filter: drop-shadow(0.5px 1px 0px var(--color-medium-blue));
+`;
 
 const Wrapper = styled.div`
   display: flex;
