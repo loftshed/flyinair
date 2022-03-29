@@ -1,14 +1,20 @@
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import Plane from "./Plane";
 import styled from "styled-components";
+
+//
 import { AppContext } from "../AppContext";
+import Plane from "./Plane";
 import LoadingSpinner from "./LoadingSpinner";
+import CancelSuccessModal from "../CancelSuccessModal";
 
 const SeatSelect = () => {
-  const { selectedFlight, selectedSeat, setReservationId } =
-    useContext(AppContext);
+  const {
+    selectedFlight,
+    selectedSeat,
+    setReservationId,
+    showCancelSuccessModal,
+  } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
 
   const history = useHistory();
@@ -67,6 +73,10 @@ const SeatSelect = () => {
       console.log(err);
     }
   };
+
+  if (showCancelSuccessModal === true) {
+    return <CancelSuccessModal />;
+  }
 
   return (
     <Wrapper>
@@ -140,7 +150,7 @@ export default SeatSelect;
 const SelectASeat = styled.p`
   font-size: 16px;
   color: var(--color-red);
-  filter: drop-shadow(0.5px 1px 0px var(--color-medium-blue));
+  /* filter: drop-shadow(0.5px 1px 0px var(--color-medium-blue)); */
 `;
 
 const Wrapper = styled.div`
@@ -149,6 +159,7 @@ const Wrapper = styled.div`
   /* margin: 0 29.5%; */
   align-items: center;
   justify-content: center;
+  font-family: Kosugi;
 `;
 const Borders = styled.div`
   display: flex;

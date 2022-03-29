@@ -10,8 +10,12 @@ const Reservation = () => {
     setReservationId,
     setCurrentReservation,
     currentReservation,
+    setShowCancelSuccessModal,
   } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -30,6 +34,20 @@ const Reservation = () => {
   }, [setCurrentReservation, reservationId]);
 
   const handleDeleteReservation = async () => {
+    const handleProcessDeletion = () => {
+      // add some fake delay to delete
+      setShowSpinner(true);
+      setShowCancelSuccessModal(true);
+      setReservationId("");
+      setCurrentReservation({});
+      localStorage.clear("reservationId");
+      setTimeout(() => {
+        setShowSpinner(false);
+        history.push("/");
+      }, Math.floor(Math.random() * 1000));
+      console.log("Reservation deleted successfully.");
+    };
+
     try {
       const updateSeats = await fetch(
         `/api/update-availability?flightNum=${currentReservation.flight}&seatId=${currentReservation.seat}&isAvailable`,
@@ -45,17 +63,15 @@ const Reservation = () => {
         }
       );
       if (deleteReservation.ok && updateSeats.ok) {
-        setReservationId("");
-        setCurrentReservation({});
-        localStorage.clear("reservationId");
-        console.log("Reservation deleted successfully.");
+        handleProcessDeletion();
       }
     } catch (err) {
       console.log(err);
+      history.push("/");
     }
   };
 
-  if (loading)
+  if (loading || !currentReservation || showSpinner)
     return (
       <div
         style={{
@@ -72,47 +88,62 @@ const Reservation = () => {
       </div>
     );
 
-  if (!loading) {
-    const { _id, flight, seat, givenName, surname, email } = currentReservation;
+  const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
-    return (
-      <Wrapper>
-        <Border>
-          <BookingContainer>
-            <Heading>Your reservation:</Heading>
-            <Details style={{ display: "flex", flexDirection: "column" }}>
-              <Item>
-                <ItemHeading>Booking ID</ItemHeading>: {_id}
-              </Item>
-              <Item>
-                <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
-              </Item>
-              <Item>
-                <ItemHeading>Contact</ItemHeading>: {email}
-              </Item>
-              <Item>
-                <ItemHeading>Flight Number</ItemHeading>: {flight}
-              </Item>
-              <Item>
-                <ItemHeading>Seat</ItemHeading>: {seat}
-              </Item>
-            </Details>
-          </BookingContainer>
-          <Options>
+  return (
+    <Wrapper>
+      <Border>
+        <BookingContainer>
+          <Heading>Your reservation:</Heading>
+          <Details style={{ display: "flex", flexDirection: "column" }}>
+            <Item>
+              <ItemHeading>Booking ID</ItemHeading>: {_id}
+            </Item>
+            <Item>
+              <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
+            </Item>
+            <Item>
+              <ItemHeading>Contact</ItemHeading>: {email}
+            </Item>
+            <Item>
+              <ItemHeading>Flight Number</ItemHeading>: {flight}
+            </Item>
+            <Item>
+              <ItemHeading>Seat</ItemHeading>: {seat}
+            </Item>
+          </Details>
+        </BookingContainer>
+        <Options>
+          {!confirmCancel ? (
             <Button
               type="button"
               onClick={() => {
-                handleDeleteReservation();
+                setConfirmCancel(true);
               }}
             >
               Cancel Booking
             </Button>
-            <Button type="button">Modify Booking</Button>
-          </Options>
-        </Border>
-      </Wrapper>
-    );
-  }
+          ) : (
+            <Button
+              type="button"
+              style={{
+                backgroundColor: "var(--color-red)",
+                width: "153px",
+                textAlign: "center",
+              }}
+              onClick={() => {
+                handleDeleteReservation();
+              }}
+            >
+              Are you sure?
+            </Button>
+          )}
+
+          <Button type="button">Modify Booking</Button>
+        </Options>
+      </Border>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.div`
