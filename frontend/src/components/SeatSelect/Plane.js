@@ -1,13 +1,15 @@
 import { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled from "styled-components";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Plane = () => {
-  const { selectedFlight, setSelectedSeat, reservationId } =
+  const { selectedFlight, setSelectedSeat, reservationId, setErrorMessage } =
     useContext(AppContext);
   const [seating, setSeating] = useState([]);
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
   // "Loading" state could probably be refined...
 
   useEffect(() => {
@@ -29,7 +31,9 @@ const Plane = () => {
         }
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
+        setErrorMessage(err);
+        history.push("");
       }
     })();
     return () => {

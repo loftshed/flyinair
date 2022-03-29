@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Reservation from "./Reservation";
+import Modify from "./Modify";
 import Error from "./Error";
 import GlobalStyles from "./GlobalStyles";
 
@@ -23,6 +24,9 @@ const App = () => {
           </Route>
           <Route exact path="/view-reservation">
             <Reservation />
+          </Route>
+          <Route exact path="/modify-reservation">
+            <Modify />
           </Route>
           <Route path="">
             <Error />

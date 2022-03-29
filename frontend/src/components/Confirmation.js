@@ -1,13 +1,18 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
 
 const Confirmation = () => {
-  const { reservationId, currentReservation, setCurrentReservation } =
-    useContext(AppContext);
+  const {
+    reservationId,
+    currentReservation,
+    setCurrentReservation,
+    setErrorMessage,
+  } = useContext(AppContext);
   const [loading, setLoading] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     let isApiSubscribed = true;
@@ -28,7 +33,9 @@ const Confirmation = () => {
 
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
+        setErrorMessage(err);
+        history.push("");
       }
     })();
     return () => {

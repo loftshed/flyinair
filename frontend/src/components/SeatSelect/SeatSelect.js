@@ -14,6 +14,7 @@ const SeatSelect = () => {
     selectedSeat,
     setReservationId,
     showCancelSuccessModal,
+    setErrorMessage,
   } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
 
@@ -70,7 +71,9 @@ const SeatSelect = () => {
         }
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      setErrorMessage(err);
+      history.push("");
     }
   };
 

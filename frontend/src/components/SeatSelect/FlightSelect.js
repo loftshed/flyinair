@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from "react";
-import { NavLink /*useHistory*/ } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled, { keyframes } from "styled-components";
 
@@ -11,8 +11,9 @@ const FlightSelect = () => {
     setSelectedFlight,
     reservationId,
     setReservationId,
+    setErrorMessage,
   } = useContext(AppContext);
-  // const history = useHistory();
+  const history = useHistory();
   // console.log(history.location.pathname);
 
   useEffect(() => {
@@ -27,7 +28,9 @@ const FlightSelect = () => {
         }
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
+        setErrorMessage(err);
+        history.push("");
       }
     })();
   }, [setAvailableFlights, reservationId, setReservationId]);

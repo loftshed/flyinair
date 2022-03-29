@@ -11,6 +11,7 @@ const Reservation = () => {
     setCurrentReservation,
     currentReservation,
     setShowCancelSuccessModal,
+    setErrorMessage,
   } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);
@@ -28,7 +29,9 @@ const Reservation = () => {
         setCurrentReservation(reservation);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
+        setErrorMessage(err);
+        history.push("");
       }
     })();
   }, [setCurrentReservation, reservationId]);
@@ -66,8 +69,9 @@ const Reservation = () => {
         handleProcessDeletion();
       }
     } catch (err) {
-      console.log(err);
-      history.push("/");
+      // console.log(err);
+      setErrorMessage(err);
+      history.push("");
     }
   };
 
