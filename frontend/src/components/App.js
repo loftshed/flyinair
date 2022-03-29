@@ -12,7 +12,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Border />
       <Header />
       <Main>
         <Switch>
@@ -39,12 +38,7 @@ const Main = styled.div`
   background: var(--color-lightest);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 130px);
-`;
-const Border = styled.div`
-  position: absolute;
-  border-left: 3px dotted var(--colors-yellow);
-  border-right: 3px dotted var(--colors-yellow);
+  height: calc(100vh - 160px);
 `;
 
 export default App;

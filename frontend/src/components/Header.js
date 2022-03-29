@@ -21,7 +21,7 @@ const Wrapper = styled.header`
   justify-content: center;
   align-items: center;
   background: var(--color-dark-blue);
-  height: 90px;
+  height: 120px;
   border-bottom: solid 2px white;
 `;
 
@@ -40,7 +40,7 @@ const Logo = styled.div`
   color: var(--color-lightest);
   font-family: "Fredoka One", cursive;
   text-shadow: -3px 0px var(--color-yellow);
-  font-size: 60px;
+  font-size: 75px;
   cursor: pointer;
 `;
 

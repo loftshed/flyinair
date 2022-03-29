@@ -26,9 +26,8 @@ const getFlights = async (req, res) => {
       ? res.status(200).json({ status: 200, flights: flightsData })
       : res.status(500).json({ status: 500, message: "Something went wrong." });
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 const getFlight = async ({ query: { flight } }, res) => {
@@ -43,9 +42,8 @@ const getFlight = async ({ query: { flight } }, res) => {
           message: "No flight with that ID.",
         });
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
@@ -69,9 +67,8 @@ const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 const addReservation = async ({ body }, res) => {
@@ -82,10 +79,9 @@ const addReservation = async ({ body }, res) => {
     );
     res.status(201).json({ status: 201, data: reservationData });
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
     res.status(500).json({ status: 500, data: body, error: err });
   }
-  client.close();
 };
 
 const getReservations = async (req, res) => {
@@ -96,9 +92,8 @@ const getReservations = async (req, res) => {
       ? res.status(200).json({ status: 200, reservations: reservationData })
       : res.status(500).json({ status: 500, message: "Something went wrong." });
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 const getSingleReservation = async ({ query: { reservationId } }, res) => {
@@ -113,9 +108,8 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
           message: "No reservation with that ID.",
         });
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 const deleteReservation = async ({ query: { reservationId } }, res) => {
@@ -133,9 +127,8 @@ const deleteReservation = async ({ query: { reservationId } }, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 const updateReservation = async ({ query: { reservationId }, body }, res) => {
@@ -156,9 +149,8 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
           .status(500)
           .json({ status: 500, data: body, message: "Update failed." });
   } catch (err) {
-    console.log(err);
+    err ? console.log(err) : client.close();
   }
-  client.close();
 };
 
 module.exports = {
