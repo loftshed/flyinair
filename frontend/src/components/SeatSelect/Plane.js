@@ -10,7 +10,6 @@ const Plane = () => {
   const [seating, setSeating] = useState([]);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  // "Loading" state could probably be refined...
 
   useEffect(() => {
     let isApiSubscribed = true;

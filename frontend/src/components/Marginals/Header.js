@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import MenuBar from "./SeatSelect/MenuBar";
-import { AppContext } from "./AppContext";
+import MenuBar from "../SeatSelect/MenuBar";
+import { AppContext } from "../AppContext";
 
 const Header = () => {
   const { setSelectedFlight, setSelectedSeat } = useContext(AppContext);

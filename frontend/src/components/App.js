@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Marginals";
+import Footer from "./Marginals/Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Reservation from "./Reservation";

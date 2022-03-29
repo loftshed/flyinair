@@ -4,7 +4,7 @@ import styled from "styled-components";
 //
 import { AppContext } from "../AppContext";
 import Plane from "./Plane";
-import CancelSuccessModal from "../CancelSuccessModal";
+import CancelSuccessModal from "../Modal/CancelSuccessModal";
 import DetailsInput from "./DetailsInput";
 
 const SeatSelect = () => {
@@ -30,7 +30,6 @@ export default SeatSelect;
 const Wrapper = styled.div`
   display: flex;
   height: 100vh;
-  /* margin: 0 29.5%; */
   align-items: center;
   justify-content: center;
   font-family: Kosugi;

@@ -1,25 +1,30 @@
 import styled from "styled-components";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+
+//
 import { AppContext } from "../AppContext";
 import LoadingSpinner from "../Anim/LoadingSpinner";
 
+/*----------------------------------------------------------------------
+| Area for entering user details, used  in SeatSelect.js and Modify.js |
+----------------------------------------------------------------------*/
+
 const DetailsInput = ({ type }) => {
   const {
-    selectedFlight,
-    selectedSeat,
-    setLoading,
-    loading,
     setReservationId,
     setErrorMessage,
+    setLoading,
+    loading,
     currentReservation,
+    selectedFlight,
+    selectedSeat,
   } = useContext(AppContext);
+  const history = useHistory();
 
   const window = selectedSeat.includes("A") || selectedSeat.includes("F");
   const middle = selectedSeat.includes("B") || selectedSeat.includes("E");
   const aisle = selectedSeat.includes("C") || selectedSeat.includes("D");
-
-  const history = useHistory();
 
   const handleSubmit = async (ev) => {
     // TODO if incorrect data entered, highlight which field it came from
@@ -32,6 +37,7 @@ const DetailsInput = ({ type }) => {
         email.value.indexOf("@") >= 1 &&
         email.value.indexOf(".") <= email.value.length - 3;
       const validated = firstNameValid && lastNameValid && emailValid;
+
       let fetchResult;
 
       if (validated) {

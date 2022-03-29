@@ -1,5 +1,9 @@
 import styled, { keyframes } from "styled-components";
 
+/*---------------------------------------------
+| Loading gradient animation used in Menu Bar |
+---------------------------------------------*/
+
 const LoadingGradient = () => {
   return (
     <>
@@ -15,7 +19,7 @@ const scroll = keyframes`
   transform: translateX(0px)
 }
 100% {
-  transform: translateX(-50%)
+  transform: translateX(-900%)
 }
 `;
 
@@ -31,5 +35,5 @@ const Gradient = styled.div`
   width: 1000%;
   height: 40px;
   box-shadow: 0px 1px 1px 0px #a8dadc;
-  animation: ${scroll} 1s linear infinite;
+  animation: ${scroll} 5s linear infinite;
 `;

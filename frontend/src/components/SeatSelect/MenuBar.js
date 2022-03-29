@@ -4,6 +4,10 @@ import { AppContext } from "../AppContext";
 import styled from "styled-components";
 import LoadingGradient from "../Anim/LoadingGradient";
 
+/*----------------------------------------
+| Menu bar displayed at bottom of Header |
+----------------------------------------*/
+
 const MenuBar = () => {
   const [loading, setLoading] = useState(false);
   const {

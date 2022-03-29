@@ -1,8 +1,12 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import { AppContext } from "./AppContext";
+import { AppContext } from "../AppContext";
 import { MdOutlineAirplanemodeInactive } from "react-icons/md";
-import LoadingSpinner from "./Anim/LoadingSpinner";
+import LoadingSpinner from "../Anim/LoadingSpinner";
+
+/*----------------------------------------------------
+| Modal displayed after a booking has been cancelled |
+----------------------------------------------------*/
 
 const CancelSuccessModal = () => {
   const { setShowCancelSuccessModal } = useContext(AppContext);
@@ -45,7 +49,6 @@ export default CancelSuccessModal;
 const Wrapper = styled.div`
   display: flex;
   height: 100vh;
-  /* margin: 0 29.5%; */
   align-items: center;
   justify-content: center;
   font-family: Kosugi;

@@ -1,7 +1,7 @@
-import SeatSelect from "./SeatSelect";
+import Header from "./Header";
 
 /*---------------------------------
 | Index for Seat Select component |
 ---------------------------------*/
 
-export default SeatSelect;
+export default Header;
