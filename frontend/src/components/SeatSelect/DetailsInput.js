@@ -147,14 +147,7 @@ const DetailsInput = ({ type }) => {
           </SeatNum>
         </Seat>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "20px",
-        }}
-      >
+      <InputContainer>
         <Heading>
           {type === "new" && "Please enter your information"}
           {type === "modify" && "Please update your information"}
@@ -190,7 +183,7 @@ const DetailsInput = ({ type }) => {
             </Spinner>
           )}
         </Inputs>
-      </div>
+      </InputContainer>
     </Wrapper>
   );
 };
@@ -234,6 +227,13 @@ const SeatNum = styled.div`
   height: 100px;
   border: 4px solid;
   border-radius: 3px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 `;
 
 const Inputs = styled.form`

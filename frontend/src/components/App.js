@@ -5,7 +5,7 @@ import Footer from "./Marginals/Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Reservation from "./Reservation";
-import Modify from "./Modify";
+import Modify from "./SeatSelect/Modify";
 import Error from "./Error";
 import GlobalStyles from "./GlobalStyles";
 

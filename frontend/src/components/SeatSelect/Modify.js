@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Plane from "./SeatSelect/Plane";
-import DetailsInput from "./SeatSelect/DetailsInput";
+import Plane from "./Plane";
+import DetailsInput from "./DetailsInput";
 
 const Modify = () => {
   const inputType = "modify";
