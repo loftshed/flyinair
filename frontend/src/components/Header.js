@@ -30,7 +30,7 @@ const CenteredDiv = styled.div`
   align-items: center;
   width: var(--main-width);
   height: 100%;
-  padding: 0px 50px;
+  padding: 0px var(--main-padding);
   border-left: 3px dashed var(--color-yellow);
   border-right: 3px dashed var(--color-yellow);
 `;

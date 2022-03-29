@@ -18,6 +18,7 @@ export default createGlobalStyle`
     --font-body: 'Kosugi', sans-serif;
     --padding-page: 24px;
     --main-width: 996px;
+    --main-padding: 60px;
   }
 
   /* http://meyerweb.com/eric/tools/css/reset/

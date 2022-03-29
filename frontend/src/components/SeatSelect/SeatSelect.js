@@ -154,9 +154,10 @@ const Wrapper = styled.div`
 const Borders = styled.div`
   display: flex;
   width: var(--main-width);
+  justify-content: space-around;
   height: 100%;
-  justify-content: center;
-  gap: 50px;
+  padding: 50px;
+  gap: 35px;
   border-left: 3px dashed var(--color-yellow);
   border-right: 3px dashed var(--color-yellow);
 `;

@@ -17,10 +17,10 @@ const Reservation = () => {
         );
         const { reservation } = await data.json();
         setCurrentReservation(reservation);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
-      setLoading(false);
     })();
   }, [setCurrentReservation, reservationId]);
 
@@ -39,9 +39,9 @@ const Reservation = () => {
       </div>
     );
 
-  const { _id, flight, seat, givenName, surname, email } = currentReservation;
+  if (!loading) {
+    const { _id, flight, seat, givenName, surname, email } = currentReservation;
 
-  if (!loading)
     return (
       <Wrapper>
         <BookingContainer>
@@ -70,6 +70,7 @@ const Reservation = () => {
         </Options>
       </Wrapper>
     );
+  }
 };
 
 const Wrapper = styled.div`

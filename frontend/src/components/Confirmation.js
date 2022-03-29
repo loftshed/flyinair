@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import { AppContext } from "./AppContext";
 import LoadingSpinner from "./SeatSelect/LoadingSpinner";
@@ -9,7 +8,6 @@ const Confirmation = () => {
   const { reservationId, currentReservation, setCurrentReservation } =
     useContext(AppContext);
   const [loading, setLoading] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     let isApiSubscribed = true;
@@ -22,22 +20,20 @@ const Confirmation = () => {
           );
           const { reservation } = await data.json();
           await setCurrentReservation(reservation);
-          localStorage.setItem(
-            "reservationId",
-            JSON.stringify(`${reservationId}`)
-          );
         }
+
         setLoading(false);
       } catch (err) {
         console.log(err);
       }
     })();
+    localStorage.setItem("reservationId", JSON.stringify(`${reservationId}`));
     return () => {
       isApiSubscribed = false; // try to find out why this works
     };
   }, [setCurrentReservation, reservationId]);
 
-  if (loading)
+  if (!currentReservation._id || loading)
     return (
       <NotLoaded>
         <LoadingSpinner />

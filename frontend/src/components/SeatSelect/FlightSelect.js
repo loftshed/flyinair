@@ -34,7 +34,17 @@ const FlightSelect = () => {
   return (
     <Wrapper style={{ overflow: "hidden" }}>
       {!availableFlights[0] || loading ? (
-        <div style={{ height: "40px" }}>
+        <div
+          style={{ display: "flex", height: "40px", justifyContent: "center" }}
+        >
+          <div
+            style={{
+              width: "1080px",
+              height: "100%",
+              backgroundColor: "none",
+              borderLeft: "3px dashed red",
+            }}
+          />
           <LoadingGradient />
         </div>
       ) : (
@@ -92,7 +102,7 @@ const Content = styled.div`
 const CenteredDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0px 50px;
+  padding: 0px var(--main-padding);
   align-items: center;
   width: var(--main-width);
   gap: 10px;

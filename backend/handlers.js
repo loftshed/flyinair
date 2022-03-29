@@ -22,20 +22,19 @@ const getFlights = async (req, res) => {
   try {
     await client.connect();
     const flightsData = await flightsDb.find().toArray();
-    client.close();
     flightsData
       ? res.status(200).json({ status: 200, flights: flightsData })
       : res.status(500).json({ status: 500, message: "Something went wrong." });
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 const getFlight = async ({ query: { flight } }, res) => {
   try {
     await client.connect();
     const flightData = await flightsDb.findOne({ _id: flight });
-    client.close();
     flightData
       ? res.status(200).json({ status: 200, flight: flightData })
       : res.status(500).json({
@@ -46,6 +45,7 @@ const getFlight = async ({ query: { flight } }, res) => {
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
@@ -55,7 +55,6 @@ const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
       { _id: flightNum, "seats.id": seatId },
       { $set: { "seats.$.isAvailable": false } }
     );
-    client.close();
     if (modifiedCount) {
       res.status(200).json({
         status: 200,
@@ -72,6 +71,7 @@ const updateAvailability = async ({ query: { flightNum, seatId } }, res) => {
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 const addReservation = async ({ body }, res) => {
@@ -80,32 +80,31 @@ const addReservation = async ({ body }, res) => {
     const reservationData = await reservationDb.insertOne(
       (body = { _id: uuidv4(), ...body })
     );
-    client.close();
     res.status(201).json({ status: 201, data: reservationData });
   } catch (err) {
     console.log(err);
     res.status(500).json({ status: 500, data: body, error: err });
   }
+  client.close();
 };
 
 const getReservations = async (req, res) => {
   try {
     await client.connect();
     const reservationData = await reservationDb.find().toArray();
-    client.close();
     reservationData
       ? res.status(200).json({ status: 200, reservations: reservationData })
       : res.status(500).json({ status: 500, message: "Something went wrong." });
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 const getSingleReservation = async ({ query: { reservationId } }, res) => {
   try {
     await client.connect();
     const reservationData = await reservationDb.findOne({ _id: reservationId });
-    client.close();
     reservationData
       ? res.status(200).json({ status: 200, reservation: reservationData })
       : res.status(500).json({
@@ -116,13 +115,13 @@ const getSingleReservation = async ({ query: { reservationId } }, res) => {
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 const deleteReservation = async ({ query: { reservationId } }, res) => {
   try {
     await client.connect();
     const deleteData = await reservationDb.deleteOne({ _id: reservationId });
-    client.close();
     if (deleteData.deletedCount) {
       console.log({ deleteData, message: "Delete successful" });
       res.status(204).json({ status: 204 });
@@ -136,6 +135,7 @@ const deleteReservation = async ({ query: { reservationId } }, res) => {
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 const updateReservation = async ({ query: { reservationId }, body }, res) => {
@@ -145,7 +145,6 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
       { _id: reservationId },
       { $set: body }
     );
-    client.close();
     const { modifiedCount, matchedCount } = updatedReservation;
     modifiedCount
       ? res.status(200).json({
@@ -159,6 +158,7 @@ const updateReservation = async ({ query: { reservationId }, body }, res) => {
   } catch (err) {
     console.log(err);
   }
+  client.close();
 };
 
 module.exports = {
