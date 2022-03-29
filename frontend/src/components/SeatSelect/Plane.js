@@ -39,7 +39,13 @@ const Plane = () => {
     return () => {
       isApiSubscribed = false; // try to find out why this works? edit: or doesn't?
     };
-  }, [selectedFlight, reservationId, setSelectedSeat]);
+  }, [
+    selectedFlight,
+    reservationId,
+    setSelectedSeat,
+    history,
+    setErrorMessage,
+  ]);
 
   // Condensing render conditions into a single variable ///////////////////////////
   const showPlaceholder = !selectedFlight || selectedFlight === "Select";

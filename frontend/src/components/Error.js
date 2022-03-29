@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { RiBug2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "./AppContext";
 
 const Error = () => {
+  const { errorMessage, setErrorMessage } = useContext(AppContext);
   return (
     <Wrapper>
       <Borders>
@@ -11,7 +14,15 @@ const Error = () => {
         <Message>
           An error has occurred -- probably because of something you did.
         </Message>
-        <StyledLink to="/">Click here to return home.</StyledLink>
+        {errorMessage && <>{errorMessage}</>}
+        <StyledLink
+          to="/"
+          onClick={() => {
+            setErrorMessage("");
+          }}
+        >
+          Click here to return home.
+        </StyledLink>
       </Borders>
     </Wrapper>
   );

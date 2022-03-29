@@ -3,7 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import styled, { keyframes } from "styled-components";
 
-const FlightSelect = () => {
+const MenuBar = () => {
   const [loading, setLoading] = useState(false);
   const {
     availableFlights,
@@ -33,7 +33,13 @@ const FlightSelect = () => {
         history.push("");
       }
     })();
-  }, [setAvailableFlights, reservationId, setReservationId]);
+  }, [
+    setAvailableFlights,
+    reservationId,
+    setReservationId,
+    setErrorMessage,
+    history,
+  ]);
 
   return (
     <Wrapper style={{ overflow: "hidden" }}>
@@ -88,7 +94,7 @@ const FlightSelect = () => {
   );
 };
 
-export default FlightSelect;
+export default MenuBar;
 
 const Wrapper = styled.div`
   position: relative;

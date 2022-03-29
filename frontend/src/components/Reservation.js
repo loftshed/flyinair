@@ -34,7 +34,7 @@ const Reservation = () => {
         history.push("");
       }
     })();
-  }, [setCurrentReservation, reservationId]);
+  }, [setCurrentReservation, reservationId, setErrorMessage, history]);
 
   const handleDeleteReservation = async () => {
     const handleProcessDeletion = () => {
@@ -124,6 +124,7 @@ const Reservation = () => {
               onClick={() => {
                 setConfirmCancel(true);
               }}
+              style={{ textShadow: "-2px 0px var(--color-red)" }}
             >
               Cancel Booking
             </Button>
@@ -143,7 +144,15 @@ const Reservation = () => {
             </Button>
           )}
 
-          <Button type="button">Modify Booking</Button>
+          <Button
+            type="button"
+            style={{ textShadow: "2px 0px var(--color-red)" }}
+            onClick={() => {
+              history.push("/modify-reservation");
+            }}
+          >
+            Modify Booking
+          </Button>
         </Options>
       </Border>
     </Wrapper>

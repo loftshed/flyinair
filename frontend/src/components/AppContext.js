@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [currentReservation, setCurrentReservation] = useState({});
   const [showCancelSuccessModal, setShowCancelSuccessModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <AppContext.Provider
@@ -28,6 +29,8 @@ export const AppProvider = ({ children }) => {
         setShowCancelSuccessModal,
         errorMessage,
         setErrorMessage,
+        setLoading,
+        loading,
       }}
     >
       {children}

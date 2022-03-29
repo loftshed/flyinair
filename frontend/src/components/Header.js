@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import FlightSelect from "./SeatSelect/FlightSelect";
+import MenuBar from "./SeatSelect/MenuBar";
 
 const Header = () => {
   const history = useHistory();
@@ -11,7 +11,7 @@ const Header = () => {
           <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
         </CenteredDiv>
       </Wrapper>
-      <FlightSelect />
+      <MenuBar />
     </>
   );
 };

@@ -41,7 +41,7 @@ const Confirmation = () => {
     return () => {
       isApiSubscribed = false; // try to find out why this works
     };
-  }, [setCurrentReservation, reservationId]);
+  }, [setCurrentReservation, reservationId, history, setErrorMessage]);
 
   if (!currentReservation || loading)
     return (
