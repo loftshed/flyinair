@@ -40,32 +40,34 @@ const FlightSelect = () => {
       ) : (
         <Content>
           <CenteredDiv>
-            <FlightNumSelect>Flight Number:</FlightNumSelect>
-            <Selector
-              name="flights"
-              id="flights"
-              onChange={(ev) => {
-                setSelectedFlight(ev.target.value);
-              }}
-              defaultValue={"default"}
-            >
-              <option key={"default"}>Select</option>
-              {availableFlights.map(({ _id }) => {
-                return (
-                  <option key={_id} value={_id}>
-                    {_id}
-                  </option>
-                );
-              })}
-            </Selector>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <FlightNumSelect>Flight Number:</FlightNumSelect>
+              <Selector
+                name="flights"
+                id="flights"
+                onChange={(ev) => {
+                  setSelectedFlight(ev.target.value);
+                }}
+                defaultValue={"default"}
+              >
+                <option key={"default"}>Select</option>
+                {availableFlights.map(({ _id }) => {
+                  return (
+                    <option key={_id} value={_id}>
+                      {_id}
+                    </option>
+                  );
+                })}
+              </Selector>
+            </div>
+            <Nav>
+              {!loading && (
+                <ReservationInfo to="/view-reservation">
+                  Your Reservation
+                </ReservationInfo>
+              )}
+            </Nav>
           </CenteredDiv>
-          <Nav>
-            {!loading && (
-              <ReservationInfo to="/view-reservation">
-                Your Reservation
-              </ReservationInfo>
-            )}
-          </Nav>
         </Content>
       )}
     </Wrapper>
@@ -81,24 +83,21 @@ const Wrapper = styled.div`
 const Content = styled.div`
   display: flex;
   font-family: "Concert One", cursive;
-  justify-content: space-between;
-  width: 100%;
-  padding: 5px 45px;
-
+  justify-content: center;
   background-color: var(--color-light-blue);
   box-shadow: 0px 1px 1px 0px #a8dadc;
   height: 40px;
-  @media screen and (min-width: 1280px) {
-    padding: 5px 30%;
-  }
 `;
 
 const CenteredDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 0px 50px;
   align-items: center;
-  width: 307px;
+  width: var(--main-width);
   gap: 10px;
+  border-left: 3px dashed var(--color-lightest);
+  border-right: 3px dashed var(--color-lightest);
 `;
 
 const FlightNumSelect = styled.h1`
@@ -152,7 +151,6 @@ const Selector = styled.select`
 
 const Nav = styled.nav`
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 `;
 

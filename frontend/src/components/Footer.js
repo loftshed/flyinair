@@ -3,8 +3,10 @@ import { GiBackPain } from "react-icons/gi";
 
 const Footer = () => (
   <Wrapper>
-    <Logo />
-    <Text>Now with less legroom!</Text>
+    <Border>
+      <Logo />
+      <Text>Now with less legroom!</Text>
+    </Border>
   </Wrapper>
 );
 
@@ -30,6 +32,14 @@ const Text = styled.p`
   font-size: 36px;
   text-align: center;
   margin: 12px 0px;
+`;
+const Border = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--main-width);
+  border-left: 3px dashed var(--color-lightest);
+  border-right: 3px dashed var(--color-lightest);
 `;
 
 export default Footer;

@@ -7,7 +7,9 @@ const Header = () => {
   return (
     <>
       <Wrapper>
-        <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
+        <CenteredDiv>
+          <Logo onClick={() => history.push("/")}>FlyinAir✈️</Logo>
+        </CenteredDiv>
       </Wrapper>
       <FlightSelect />
     </>
@@ -16,16 +18,23 @@ const Header = () => {
 
 const Wrapper = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background: var(--color-dark-blue);
   height: 90px;
-  padding: var(--padding-page) 48px;
   border-bottom: solid 2px white;
-  @media screen and (min-width: 1080px) {
-    padding: 0 30%;
-  }
 `;
+
+const CenteredDiv = styled.div`
+  display: flex;
+  align-items: center;
+  width: var(--main-width);
+  height: 100%;
+  padding: 0px 50px;
+  border-left: 3px dashed var(--color-yellow);
+  border-right: 3px dashed var(--color-yellow);
+`;
+
 const Logo = styled.div`
   transform: translateY(-2px);
   color: var(--color-lightest);

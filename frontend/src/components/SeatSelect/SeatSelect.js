@@ -77,53 +77,67 @@ const SeatSelect = () => {
 
   return (
     <Wrapper>
-      <Plane />
-      <DetailsContainer>
-        <div>
-          <Seat>
-            <SeatNum>
-              {selectedSeat && selectedFlight !== "Select" ? (
-                <div>
-                  {selectedSeat}
-                  <p style={{ fontSize: "14px" }}>
-                    {window && <>WINDOW</>}
-                    {middle && <>MIDDLE</>}
-                    {aisle && <>AISLE</>}
-                  </p>
-                </div>
-              ) : (
-                <div style={{ fontSize: "16px", color: "var(--color-red)" }}>
-                  <p>SELECT</p>
-                  <p>A</p>
-                  <p>SEAT</p>
-                </div>
+      <Borders>
+        <Plane />
+        <DetailsContainer>
+          <div>
+            <Seat>
+              <SeatNum>
+                {selectedSeat && selectedFlight !== "Select" ? (
+                  <div>
+                    {selectedSeat}
+                    <p style={{ fontSize: "14px" }}>
+                      {window && <>WINDOW</>}
+                      {middle && <>MIDDLE</>}
+                      {aisle && <>AISLE</>}
+                    </p>
+                  </div>
+                ) : (
+                  <div style={{ fontSize: "16px", color: "var(--color-red)" }}>
+                    <p>SELECT</p>
+                    <p>A</p>
+                    <p>SEAT</p>
+                  </div>
+                )}
+              </SeatNum>
+            </Seat>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            <Heading>Please provide your information:</Heading>
+            <Inputs onSubmit={handleSubmit}>
+              <InputField
+                htmlFor="firstName"
+                name="firstName"
+                placeholder="First name"
+              />
+              <InputField
+                htmlFor="lastName"
+                name="lastName"
+                placeholder="Last name"
+              />
+              <InputField htmlFor="email" name="email" placeholder="Email" />
+              {!loading && <SubmitButton type="submit" value="Confirm" />}
+              {loading && (
+                <Spinner>
+                  <div style={{ transform: "translateY(1.5px)" }}>
+                    <LoadingSpinner
+                      size={"25px"}
+                      color={"var(--color-lightest)"}
+                    />
+                  </div>
+                </Spinner>
               )}
-            </SeatNum>
-          </Seat>
-        </div>
-        <Heading>Please provide your information:</Heading>
-        <Inputs onSubmit={handleSubmit}>
-          <InputField
-            htmlFor="firstName"
-            name="firstName"
-            placeholder="First name"
-          />
-          <InputField
-            htmlFor="lastName"
-            name="lastName"
-            placeholder="Last name"
-          />
-          <InputField htmlFor="email" name="email" placeholder="Email" />
-          {!loading && <SubmitButton type="submit" value="Confirm" />}
-          {loading && (
-            <Spinner>
-              <div style={{ transform: "translateY(1.5px)" }}>
-                <LoadingSpinner size={"25px"} color={"var(--color-lightest)"} />
-              </div>
-            </Spinner>
-          )}
-        </Inputs>
-      </DetailsContainer>
+            </Inputs>
+          </div>
+        </DetailsContainer>
+      </Borders>
     </Wrapper>
   );
 };
@@ -133,15 +147,28 @@ export default SeatSelect;
 const Wrapper = styled.div`
   display: flex;
   height: 100vh;
-  padding: 0 30%;
-  justify-content: space-around;
+  /* margin: 0 29.5%; */
+  align-items: center;
+  justify-content: center;
+`;
+const Borders = styled.div`
+  display: flex;
+  width: var(--main-width);
+  height: 100%;
+  justify-content: center;
+  gap: 50px;
+  border-left: 3px dashed var(--color-yellow);
+  border-right: 3px dashed var(--color-yellow);
 `;
 
 const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 50px;
   justify-content: center;
   align-items: center;
+  align-self: center;
+  height: 575px;
 `;
 
 const Spinner = styled.div`
