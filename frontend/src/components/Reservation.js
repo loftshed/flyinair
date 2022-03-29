@@ -35,7 +35,9 @@ const Reservation = () => {
           alignItems: "center",
         }}
       >
-        <LoadingSpinner />
+        <Border>
+          <LoadingSpinner />
+        </Border>
       </div>
     );
 
@@ -44,30 +46,32 @@ const Reservation = () => {
 
     return (
       <Wrapper>
-        <BookingContainer>
-          <Heading>Your reservation:</Heading>
-          <Details style={{ display: "flex", flexDirection: "column" }}>
-            <Item>
-              <ItemHeading>Booking ID</ItemHeading>: {_id}
-            </Item>
-            <Item>
-              <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
-            </Item>
-            <Item>
-              <ItemHeading>Contact</ItemHeading>: {email}
-            </Item>
-            <Item>
-              <ItemHeading>Flight Number</ItemHeading>: {flight}
-            </Item>
-            <Item>
-              <ItemHeading>Seat</ItemHeading>: {seat}
-            </Item>
-          </Details>
-        </BookingContainer>
-        <Options>
-          <Button>Cancel Booking</Button>
-          <Button>Modify Booking</Button>
-        </Options>
+        <Border>
+          <BookingContainer>
+            <Heading>Your reservation:</Heading>
+            <Details style={{ display: "flex", flexDirection: "column" }}>
+              <Item>
+                <ItemHeading>Booking ID</ItemHeading>: {_id}
+              </Item>
+              <Item>
+                <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
+              </Item>
+              <Item>
+                <ItemHeading>Contact</ItemHeading>: {email}
+              </Item>
+              <Item>
+                <ItemHeading>Flight Number</ItemHeading>: {flight}
+              </Item>
+              <Item>
+                <ItemHeading>Seat</ItemHeading>: {seat}
+              </Item>
+            </Details>
+          </BookingContainer>
+          <Options>
+            <Button>Cancel Booking</Button>
+            <Button>Modify Booking</Button>
+          </Options>
+        </Border>
       </Wrapper>
     );
   }
@@ -80,8 +84,20 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-family: Kosugi;
-  gap: 20px;
+
   color: var(--color-dark-blue);
+`;
+
+const Border = styled.div`
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: var(--main-width);
+  justify-content: center;
+  align-items: center;
+  border-left: 3px dashed var(--color-yellow);
+  border-right: 3px dashed var(--color-yellow);
 `;
 
 const BookingContainer = styled.div`

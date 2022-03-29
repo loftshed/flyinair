@@ -20,6 +20,10 @@ const Confirmation = () => {
           );
           const { reservation } = await data.json();
           await setCurrentReservation(reservation);
+          localStorage.setItem(
+            "reservationId",
+            JSON.stringify(`${reservationId}`)
+          );
         }
 
         setLoading(false);
@@ -27,7 +31,6 @@ const Confirmation = () => {
         console.log(err);
       }
     })();
-    localStorage.setItem("reservationId", JSON.stringify(`${reservationId}`));
     return () => {
       isApiSubscribed = false; // try to find out why this works
     };
@@ -36,7 +39,9 @@ const Confirmation = () => {
   if (!currentReservation._id || loading)
     return (
       <NotLoaded>
-        <LoadingSpinner />
+        <Border>
+          <LoadingSpinner />
+        </Border>
       </NotLoaded>
     );
 
@@ -46,31 +51,41 @@ const Confirmation = () => {
     <>
       {!loading && (
         <Wrapper>
-          <BookingContainer>
-            <Heading>Your booking is confirmed!</Heading>
-            <Details style={{ display: "flex", flexDirection: "column" }}>
-              <Item>
-                <ItemHeading>Booking ID</ItemHeading>: {_id}
-              </Item>
-              <Item>
-                <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
-              </Item>
-              <Item>
-                <ItemHeading>Contact</ItemHeading>: {email}
-              </Item>
-              <Item>
-                <ItemHeading>Flight Number</ItemHeading>: {flight}
-              </Item>
-              <Item>
-                <ItemHeading>Seat</ItemHeading>: {seat}
-              </Item>
-            </Details>
-          </BookingContainer>
+          <Border>
+            <BookingContainer>
+              <Heading>Your booking is confirmed!</Heading>
+              <Details style={{ display: "flex", flexDirection: "column" }}>
+                <Item>
+                  <ItemHeading>Booking ID</ItemHeading>: {_id}
+                </Item>
+                <Item>
+                  <ItemHeading>Passenger</ItemHeading>: {givenName} {surname}
+                </Item>
+                <Item>
+                  <ItemHeading>Contact</ItemHeading>: {email}
+                </Item>
+                <Item>
+                  <ItemHeading>Flight Number</ItemHeading>: {flight}
+                </Item>
+                <Item>
+                  <ItemHeading>Seat</ItemHeading>: {seat}
+                </Item>
+              </Details>
+            </BookingContainer>
+          </Border>
         </Wrapper>
       )}
     </>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-family: Kosugi;
+`;
 
 const NotLoaded = styled.div`
   display: flex;
@@ -80,12 +95,16 @@ const NotLoaded = styled.div`
   align-items: center;
 `;
 
-const Wrapper = styled.div`
+const Border = styled.div`
+  gap: 20px;
   display: flex;
+  flex-direction: column;
   height: 100%;
+  width: var(--main-width);
   justify-content: center;
   align-items: center;
-  font-family: Kosugi;
+  border-left: 3px dashed var(--color-yellow);
+  border-right: 3px dashed var(--color-yellow);
 `;
 
 const BookingContainer = styled.div`
