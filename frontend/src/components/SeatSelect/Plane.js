@@ -63,18 +63,9 @@ const Plane = () => {
           <Placeholder>Select a Flight to view seating.</Placeholder>
         )}
         {showLoadingSpinner && (
-          <div
-            style={{
-              position: "absolute",
-              display: "flex",
-              width: "100%",
-              height: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <SpinnerContainer>
             <LoadingSpinner />
-          </div>
+          </SpinnerContainer>
         )}
         {showSeating &&
           seating.map((seat) => (
@@ -160,6 +151,15 @@ const Placeholder = styled.div`
   font-family: var(--font-heading);
   font-size: 32px;
   opacity: 0.5;
+`;
+
+const SpinnerContainer = styled.div`
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SeatWrapper = styled.li`

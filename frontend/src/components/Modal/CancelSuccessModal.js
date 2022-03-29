@@ -4,9 +4,10 @@ import { AppContext } from "../AppContext";
 import { MdOutlineAirplanemodeInactive } from "react-icons/md";
 import LoadingSpinner from "../Anim/LoadingSpinner";
 
-/*----------------------------------------------------
-| Modal displayed after a booking has been cancelled |
-----------------------------------------------------*/
+/*-----------------------------------------------------------
+| Modal displayed after a booking has been cancelled        |
+| not actually a modal now but was intending to make it one |
+-----------------------------------------------------------*/
 
 const CancelSuccessModal = () => {
   const { setShowCancelSuccessModal } = useContext(AppContext);

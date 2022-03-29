@@ -47,6 +47,7 @@ export default createGlobalStyle`
       vertical-align: baseline;
       /* user-select: none; */
       transition: all linear ease 0.2s;
+      z-index: 5;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure,
