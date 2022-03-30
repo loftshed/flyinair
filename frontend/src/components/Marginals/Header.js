@@ -3,6 +3,9 @@ import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import MenuBar from "../SeatSelect/MenuBar";
 import { AppContext } from "../AppContext";
+import { WiStrongWind, WiWindy, WiDayWindy } from "react-icons/wi";
+import { GiCommercialAirplane } from "react-icons/gi";
+import { ReactComponent as PlaneSvg } from "../../assets/plane.svg";
 
 const Header = () => {
   const { setSelectedFlight, setSelectedSeat } = useContext(AppContext);
@@ -16,17 +19,27 @@ const Header = () => {
           <CenteredDiv>
             <>
               {/* cheeseball way of getting around annoying bug when clicking logo on seat select page */}
-              {location.pathname === "/" && <Logo>FlyinAir✈️</Logo>}
+              {location.pathname === "/" && (
+                <>
+                  <SpeedLines />
+                  <Logo>FlyinAir</Logo>
+                  <Plane />
+                </>
+              )}
               {location.pathname !== "/" && (
-                <Logo
-                  onClick={() => {
-                    history.push("/");
-                    setSelectedFlight("");
-                    setSelectedSeat("");
-                  }}
-                >
-                  FlyinAir✈️
-                </Logo>
+                <>
+                  <SpeedLines />
+                  <Logo
+                    onClick={() => {
+                      history.push("/");
+                      setSelectedFlight("");
+                      setSelectedSeat("");
+                    }}
+                  >
+                    FlyinAir✈️
+                  </Logo>
+                  <Plane />
+                </>
               )}
             </>
           </CenteredDiv>
@@ -45,6 +58,21 @@ const Wrapper = styled.header`
   height: 120px;
   border-bottom: solid 2px white;
   user-select: none;
+`;
+const SpeedLines = styled(WiDayWindy)`
+  color: #fff;
+  margin-left: -45px;
+  height: 100px;
+  width: 98px;
+  margin-right: -20px;
+  transform: scaleX(-1);
+  color: var(--color-light-blue);
+`;
+
+const Plane = styled(PlaneSvg)`
+  height: 80px;
+  width: 80px;
+  filter: drop-shadow(-2px 2px var(--color-yellow));
 `;
 
 const BgDiv = styled.div`
