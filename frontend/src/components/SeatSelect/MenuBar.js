@@ -17,6 +17,7 @@ const MenuBar = () => {
     reservationId,
     setReservationId,
     setErrorMessage,
+    showCancelSuccessModal,
   } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
@@ -57,28 +58,29 @@ const MenuBar = () => {
           <CenteredDiv>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               {(location.pathname === "/" ||
-                location.pathname === "/modify-reservation") && (
-                <>
-                  <FlightNumSelect>Flight Number:</FlightNumSelect>
-                  <Selector
-                    name="flights"
-                    id="flights"
-                    onChange={(ev) => {
-                      setSelectedFlight(ev.target.value);
-                    }}
-                    defaultValue={"default"}
-                  >
-                    <option key={"default"}>Select</option>
-                    {availableFlights.map(({ _id }) => {
-                      return (
-                        <option key={_id} value={_id}>
-                          {_id}
-                        </option>
-                      );
-                    })}
-                  </Selector>
-                </>
-              )}
+                location.pathname === "/modify-reservation") &&
+                !showCancelSuccessModal && (
+                  <>
+                    <FlightNumSelect>Flight Number:</FlightNumSelect>
+                    <Selector
+                      name="flights"
+                      id="flights"
+                      onChange={(ev) => {
+                        setSelectedFlight(ev.target.value);
+                      }}
+                      defaultValue={"default"}
+                    >
+                      <option key={"default"}>Select</option>
+                      {availableFlights.map(({ _id }) => {
+                        return (
+                          <option key={_id} value={_id}>
+                            {_id}
+                          </option>
+                        );
+                      })}
+                    </Selector>
+                  </>
+                )}
             </div>
             <Nav>
               {!loading && reservationId && (
