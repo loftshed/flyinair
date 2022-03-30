@@ -21,24 +21,39 @@ const Header = () => {
               {/* cheeseball way of getting around annoying bug when clicking logo on seat select page */}
               {location.pathname === "/" && (
                 <>
-                  <SpeedLines />
-                  <Logo>FlyinAir</Logo>
-                  <Plane />
+                  <div
+                    style={{
+                      display: "inherit",
+                      justifyContent: "inherit",
+                      alignItems: "inherit",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <SpeedLines />
+                    <Logo>FlyinAir</Logo>
+                    <Plane />
+                  </div>
                 </>
               )}
               {location.pathname !== "/" && (
                 <>
-                  <SpeedLines />
-                  <Logo
+                  <div
+                    style={{
+                      display: "inherit",
+                      justifyContent: "inherit",
+                      alignItems: "inherit",
+                      cursor: "pointer",
+                    }}
                     onClick={() => {
                       history.push("/");
                       setSelectedFlight("");
                       setSelectedSeat("");
                     }}
                   >
-                    FlyinAir✈️
-                  </Logo>
-                  <Plane />
+                    <SpeedLines />
+                    <Logo>FlyinAir</Logo>
+                    <Plane />
+                  </div>
                 </>
               )}
             </>
