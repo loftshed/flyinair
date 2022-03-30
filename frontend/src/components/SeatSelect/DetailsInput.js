@@ -36,7 +36,8 @@ const DetailsInput = ({ type }) => {
       const emailValid =
         email.value.indexOf("@") >= 1 &&
         email.value.indexOf(".") <= email.value.length - 3;
-      const validated = firstNameValid && lastNameValid && emailValid;
+      const validated =
+        firstNameValid && lastNameValid && emailValid && selectedSeat;
 
       let fetchResult;
 
