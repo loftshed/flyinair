@@ -66,8 +66,8 @@ const Borders = styled.div`
 `;
 
 const PlaneIcon = styled(MdOutlineAirplanemodeInactive)`
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   color: var(--color-dark-blue);
 `;
 

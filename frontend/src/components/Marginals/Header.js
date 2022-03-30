@@ -3,15 +3,15 @@ import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import MenuBar from "../SeatSelect/MenuBar";
 import { AppContext } from "../AppContext";
-import { WiStrongWind, WiWindy, WiDayWindy } from "react-icons/wi";
-import { GiCommercialAirplane } from "react-icons/gi";
+import { WiDayWindy } from "react-icons/wi";
+
 import { ReactComponent as PlaneSvg } from "../../assets/plane.svg";
 
 const Header = () => {
   const { setSelectedFlight, setSelectedSeat } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
-  console.log(location.pathname);
+
   return (
     <>
       <Wrapper>

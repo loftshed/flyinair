@@ -36,7 +36,7 @@ const Plane = () => {
       }
     })();
     return () => {
-      isApiSubscribed = false; // try to find out why this works? edit: or doesn't?
+      isApiSubscribed = false; // try to find out why this works?4 edit: or doesn't?
     };
   }, [
     selectedFlight,
