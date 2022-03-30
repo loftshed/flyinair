@@ -7,7 +7,7 @@ const Footer = () => (
       <Border>
         <Logo />
         <Text>
-          Won't stretch your budget- <Test>or your legs!</Test>
+          Stretch your budget- <Test>not your legs!</Test>
         </Text>
       </Border>
     </Wrapper>
