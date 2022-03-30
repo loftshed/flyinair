@@ -98,6 +98,7 @@ export default MenuBar;
 
 const Wrapper = styled.div`
   position: relative;
+  user-select: none;
   /* & > * {
     font-family: "Kosugi";
   } */

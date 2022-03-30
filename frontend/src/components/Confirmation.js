@@ -127,6 +127,7 @@ const BookingContainer = styled.div`
 // contents of BookingContainer
 const Heading = styled.h3`
   color: var(--color-medium-blue);
+  user-select: none;
 `;
 const ItemHeading = styled.span`
   font-weight: 600;

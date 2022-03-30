@@ -198,6 +198,7 @@ const Wrapper = styled.div`
   align-items: center;
   align-self: center;
   height: 575px;
+  user-select: none;
 `;
 
 const Heading = styled.p`
@@ -248,6 +249,7 @@ const Inputs = styled.form`
 `;
 
 const InputField = styled.input`
+  user-select: all;
   &:active {
     outline: var(--color-dark-blue);
   }

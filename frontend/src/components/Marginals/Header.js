@@ -44,6 +44,7 @@ const Wrapper = styled.header`
   background: var(--color-dark-blue);
   height: 120px;
   border-bottom: solid 2px white;
+  user-select: none;
 `;
 
 const BgDiv = styled.div`

@@ -199,6 +199,7 @@ const BookingContainer = styled.div`
 
 const Heading = styled.h3`
   color: var(--color-medium-blue);
+  user-select: none;
 `;
 
 const Details = styled.ul`
@@ -221,6 +222,7 @@ const Options = styled.div`
 `;
 
 const Button = styled.button`
+  user-select: none;
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;

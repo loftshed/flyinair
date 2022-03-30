@@ -96,6 +96,7 @@ const Plane = () => {
 };
 
 const Wrapper = styled.div`
+  user-select: none;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   height: fit-content;
   bottom: 0px;
   box-shadow: 0px 0px 2px 0px #a8dadc;
+  user-select: none;
 `;
 const Logo = styled(GiBackPain)`
   color: var(--color-yellow);

@@ -45,7 +45,7 @@ export default createGlobalStyle`
       box-sizing: border-box;
       font-size: 100%;
       vertical-align: baseline;
-      /* user-select: none; */
+      
       transition: all linear ease 0.2s;
       z-index: 5;
   }
