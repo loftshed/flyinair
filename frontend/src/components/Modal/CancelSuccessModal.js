@@ -10,10 +10,12 @@ import LoadingSpinner from "../Anim/LoadingSpinner";
 -----------------------------------------------------------*/
 
 const CancelSuccessModal = () => {
-  const { setShowCancelSuccessModal } = useContext(AppContext);
+  const { setShowCancelSuccessModal, setSelectedFlight } =
+    useContext(AppContext);
   const [showSpinner, setShowSpinner] = useState(false);
   const handleConfirm = () => {
     setShowSpinner(true);
+    setSelectedFlight("");
     setTimeout(() => {
       setShowSpinner(false);
       setShowCancelSuccessModal(false);

@@ -194,7 +194,7 @@ const BookingContainer = styled.div`
   border: dashed 2px var(--color-dark-blue);
   border-radius: 5px;
   padding: 25px;
-  width: 600px;
+  width: 570px;
 `;
 
 const Heading = styled.h3`

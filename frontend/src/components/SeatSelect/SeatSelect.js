@@ -43,4 +43,6 @@ const Borders = styled.div`
   gap: 35px;
   border-left: 3px dashed var(--color-yellow);
   border-right: 3px dashed var(--color-yellow);
+  margin-top: 20px;
+  overflow: hidden;
 `;
