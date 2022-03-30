@@ -26,7 +26,6 @@ const Plane = () => {
             flight: { seats },
           } = await data.json();
           setSeating(seats);
-          setSelectedSeat("");
         }
         setLoading(false);
       } catch (err) {
