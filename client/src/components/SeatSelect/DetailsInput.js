@@ -154,27 +154,40 @@ const DetailsInput = ({ type }) => {
           {type === "modify" && "Please update your information"}
         </Heading>
         <Inputs onSubmit={handleSubmit}>
-          <InputField
-            htmlFor="firstName"
-            name="firstName"
-            placeholder={
-              type === "new" ? "First name" : currentReservation.givenName
-            }
-          />
-          <InputField
-            htmlFor="lastName"
-            name="lastName"
-            placeholder={
-              type === "new" ? "Last name" : currentReservation.surname
-            }
+          {type === "new" ? (
+            <>
+              <InputField
+                htmlFor="firstName"
+                name="firstName"
+                placeholder={"First name"}
+              />
+              <InputField
+                htmlFor="lastName"
+                name="lastName"
+                placeholder={"Last name"}
+              />
+              <InputField htmlFor="email" name="email" placeholder={"Email"} />{" "}
+            </>
+          ) : (
+            <>
+              <InputField
+                htmlFor="firstName"
+                name="firstName"
+                defaultValue={currentReservation.givenName}
+              />
+              <InputField
+                htmlFor="lastName"
+                name="lastName"
+                defaultValue={currentReservation.surname}
+              />
+              <InputField
+                htmlFor="email"
+                name="email"
+                defaultValue={currentReservation.email}
+              />{" "}
+            </>
+          )}
 
-            // change to value
-          />
-          <InputField
-            htmlFor="email"
-            name="email"
-            placeholder={type === "new" ? "Email" : currentReservation.email}
-          />
           {!loading && <SubmitButton type="submit" value="Confirm" />}
           {loading && (
             <Spinner>
